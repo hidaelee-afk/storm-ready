@@ -554,7 +554,7 @@
 <!-- ACTIVE ALERT BAR -->
 <div class="alert-bar">
   <span class="pulse"></span>
-  <span><b>SAMPLE ALERT:</b> Example flood warning — this banner is where a live NOAA alert would appear.</span>
+  <span id="alertBarText">Loading live storm alerts from the National Weather Service…</span>
   <a href="https://www.fema.gov/assistance/individual" target="_blank" rel="noopener">FEMA disaster assistance →</a>
 </div>
 
@@ -743,7 +743,7 @@
 
     <div class="map-wrap">
       <div class="map-usa"></div>
-      <div class="map-label"><span class="live-dot"></span>SAMPLE — 4 active + 4 forecast zones</div>
+      <div class="map-label"><span class="live-dot"></span><span id="mapLabelText">Loading live zone counts…</span> <span style="opacity:.6;">(pin locations illustrative)</span></div>
 
       <!-- Critical pins -->
       <div class="map-pin critical" style="left:54%; top:82%;"></div>
@@ -783,67 +783,13 @@
     </div>
 
     <h3 style="font-size:14px; text-transform:uppercase; letter-spacing:1px; color:var(--alert); margin:0 0 16px;">🚨 Active recovery zones — storm in progress</h3>
-    <div class="zones-grid" style="margin-bottom:40px;">
-      <div class="zone-card">
-        <span class="severity sev-critical">⚠ Critical</span>
-        <h3>Harris County, TX</h3>
-        <div class="meta">Example event • Flood Warning</div>
-        <div class="residents"><b>~4.7M</b> residents affected • <b>23 ZIPs</b> in alert zone</div>
-        <a href="https://www.fema.gov/assistance/individual" target="_blank" rel="noopener" class="resource-link">FEMA disaster assistance →</a>
-      </div>
-      <div class="zone-card">
-        <span class="severity sev-critical">⚠ Critical</span>
-        <h3>Hillsborough County, FL</h3>
-        <div class="meta">Example event • Storm Surge</div>
-        <div class="residents"><b>~1.5M</b> residents affected • <b>14 ZIPs</b> in alert zone</div>
-        <a href="https://www.fema.gov/assistance/individual" target="_blank" rel="noopener" class="resource-link">FEMA disaster assistance →</a>
-      </div>
-      <div class="zone-card">
-        <span class="severity sev-active">⚡ Active</span>
-        <h3>Jefferson Parish, LA</h3>
-        <div class="meta">Severe Flooding • FEMA-DR-4789 declared</div>
-        <div class="residents"><b>~432k</b> residents affected • <b>9 ZIPs</b> in alert zone</div>
-        <a href="https://www.fema.gov/assistance/individual" target="_blank" rel="noopener" class="resource-link">FEMA disaster assistance →</a>
-      </div>
-      <div class="zone-card">
-        <span class="severity sev-active">⚡ Active</span>
-        <h3>Buncombe County, NC</h3>
-        <div class="meta">Flash Flood Warning • Mountain runoff</div>
-        <div class="residents"><b>~270k</b> residents affected • <b>6 ZIPs</b> in alert zone</div>
-        <a href="https://www.fema.gov/assistance/individual" target="_blank" rel="noopener" class="resource-link">FEMA disaster assistance →</a>
-      </div>
+    <div class="zones-grid" style="margin-bottom:40px;" id="activeZonesGrid">
+      <div class="zone-card"><div class="meta">Loading live NWS alerts…</div></div>
     </div>
 
-    <h3 style="font-size:14px; text-transform:uppercase; letter-spacing:1px; color:var(--accent); margin:0 0 16px;">◷ Incoming threats — 24-72 hour forecast window</h3>
-    <div class="zones-grid">
-      <div class="zone-card">
-        <span class="severity sev-watch">◷ 36hr out</span>
-        <h3>Mobile Bay, AL</h3>
-        <div class="meta">Tropical system intensifying • Coastal flood watch</div>
-        <div class="residents"><b>~720k</b> residents in prep zone • <b>11 ZIPs</b></div>
-        <a href="https://www.ready.gov/hurricanes" target="_blank" rel="noopener" class="resource-link">Ready.gov prep guide →</a>
-      </div>
-      <div class="zone-card">
-        <span class="severity sev-watch">◷ 48hr out</span>
-        <h3>Hampton Roads, VA</h3>
-        <div class="meta">Nor'easter forming • Storm surge watch</div>
-        <div class="residents"><b>~1.8M</b> residents in prep zone • <b>17 ZIPs</b></div>
-        <a href="https://www.ready.gov/hurricanes" target="_blank" rel="noopener" class="resource-link">Ready.gov prep guide →</a>
-      </div>
-      <div class="zone-card">
-        <span class="severity sev-watch">◷ 48hr out</span>
-        <h3>Sacramento County, CA</h3>
-        <div class="meta">Atmospheric river incoming • Mountain runoff risk</div>
-        <div class="residents"><b>~1.6M</b> residents in prep zone • <b>14 ZIPs</b></div>
-        <a href="https://www.ready.gov/hurricanes" target="_blank" rel="noopener" class="resource-link">Ready.gov prep guide →</a>
-      </div>
-      <div class="zone-card">
-        <span class="severity sev-watch">◷ 72hr out</span>
-        <h3>Cook County, IL</h3>
-        <div class="meta">Severe storm watch • Heavy rain forecast</div>
-        <div class="residents"><b>~5.1M</b> residents in prep zone • <b>22 ZIPs</b></div>
-        <a href="https://www.ready.gov/hurricanes" target="_blank" rel="noopener" class="resource-link">Ready.gov prep guide →</a>
-      </div>
+    <h3 style="font-size:14px; text-transform:uppercase; letter-spacing:1px; color:var(--accent); margin:0 0 16px;">◷ Incoming threats — watches &amp; advisories</h3>
+    <div class="zones-grid" id="watchZonesGrid">
+      <div class="zone-card"><div class="meta">Loading live NWS alerts…</div></div>
     </div>
   </div>
 </section>
@@ -1264,6 +1210,142 @@
     <b>Affiliate Disclosure:</b> StormReady USA is a participant in the Amazon Services LLC Associates Program, an affiliate advertising program. We earn a small commission on qualifying purchases at no extra cost to you. Recommendations are independently selected and not influenced by commission rates. 5% of net affiliate revenue is donated quarterly to the American Red Cross.
   </div>
 </footer>
+
+<script>
+(function () {
+  "use strict";
+
+  // Keywords that keep an NWS alert on-theme for a storm/flood recovery site.
+  var STORM_RE = /flood|hurricane|tropical|storm surge|tornado|thunderstorm|winter storm|blizzard|ice storm|high wind|tsunami|coastal flood/i;
+  var SEVERITY_RANK = { Extreme: 4, Severe: 3, Moderate: 2, Minor: 1, Unknown: 0 };
+
+  function escapeHtml(str) {
+    return String(str).replace(/[&<>"']/g, function (c) {
+      return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c];
+    });
+  }
+
+  function shortArea(areaDesc) {
+    // NWS areaDesc is often a long semicolon-separated list of counties/zones — show the first couple.
+    var parts = areaDesc.split(";").map(function (s) { return s.trim(); }).filter(Boolean);
+    var shown = parts.slice(0, 2).join("; ");
+    return parts.length > 2 ? shown + " +" + (parts.length - 2) + " more" : shown;
+  }
+
+  function timeAgo(iso) {
+    if (!iso) return "";
+    var diffMin = Math.round((Date.now() - new Date(iso).getTime()) / 60000);
+    if (diffMin < 1) return "just now";
+    if (diffMin < 60) return diffMin + "m ago";
+    var diffHr = Math.round(diffMin / 60);
+    if (diffHr < 24) return diffHr + "h ago";
+    return Math.round(diffHr / 24) + "d ago";
+  }
+
+  function classify(props) {
+    var event = props.event || "";
+    var isWatch = /watch|advisory/i.test(event);
+    var isEmergency = /emergency/i.test(event);
+    if (isEmergency || (props.severity === "Extreme" && !isWatch)) return "critical";
+    if (isWatch) return "watch";
+    if (props.severity === "Severe" || props.severity === "Moderate") return "active";
+    return "watch";
+  }
+
+  var LABELS = {
+    critical: { badge: "⚠ Critical", cls: "sev-critical" },
+    active: { badge: "⚡ Active", cls: "sev-active" },
+    watch: { badge: "◷ Watch", cls: "sev-watch" }
+  };
+
+  function cardHtml(props, tier) {
+    var label = LABELS[tier];
+    var area = shortArea(props.areaDesc || "Area unavailable");
+    var linkHref = tier === "watch" ? "https://www.ready.gov/hurricanes" : "https://www.fema.gov/assistance/individual";
+    var linkText = tier === "watch" ? "Ready.gov prep guide →" : "FEMA disaster assistance →";
+    return (
+      '<div class="zone-card">' +
+      '<span class="severity ' + label.cls + '">' + label.badge + "</span>" +
+      "<h3>" + escapeHtml(area) + "</h3>" +
+      '<div class="meta">' + escapeHtml(props.event || "") + " • updated " + timeAgo(props.sent) + "</div>" +
+      '<div class="residents">' + escapeHtml(props.headline || props.event || "") + "</div>" +
+      '<a href="' + linkHref + '" target="_blank" rel="noopener" class="resource-link">' + linkText + "</a>" +
+      "</div>"
+    );
+  }
+
+  function renderGrid(id, items, tier) {
+    var el = document.getElementById(id);
+    if (!el) return;
+    if (!items.length) {
+      el.innerHTML = '<div class="zone-card"><div class="meta">No ' + (tier === "watch" ? "active watches/advisories" : "active warnings") + " right now — check back soon.</div></div>";
+      return;
+    }
+    el.innerHTML = items.slice(0, 4).map(function (f) { return cardHtml(f.properties, tier); }).join("");
+  }
+
+  function loadStormData() {
+    fetch("https://api.weather.gov/alerts/active?status=actual&message_type=alert,update&severity=Extreme,Severe,Moderate", {
+      headers: { Accept: "application/geo+json" }
+    })
+      .then(function (resp) {
+        if (!resp.ok) throw new Error("NWS API " + resp.status);
+        return resp.json();
+      })
+      .then(function (data) {
+        var features = (data.features || []).filter(function (f) {
+          return STORM_RE.test(f.properties.event || "");
+        });
+
+        var critical = [], active = [], watch = [];
+        features.forEach(function (f) {
+          var tier = classify(f.properties);
+          if (tier === "critical") critical.push(f);
+          else if (tier === "active") active.push(f);
+          else watch.push(f);
+        });
+
+        var byRecency = function (a, b) { return new Date(b.properties.sent) - new Date(a.properties.sent); };
+        critical.sort(byRecency);
+        active.sort(byRecency);
+        watch.sort(byRecency);
+
+        renderGrid("activeZonesGrid", critical.concat(active), "active");
+        renderGrid("watchZonesGrid", watch, "watch");
+
+        var mapLabelEl = document.getElementById("mapLabelText");
+        if (mapLabelEl) {
+          mapLabelEl.textContent = "LIVE — " + (critical.length + active.length) + " active + " + watch.length + " watch/advisory zones";
+        }
+
+        var barEl = document.getElementById("alertBarText");
+        if (barEl) {
+          var top = critical[0] || active[0];
+          if (top) {
+            barEl.innerHTML = "<b>LIVE:</b> " + escapeHtml(top.properties.event) + " — " + escapeHtml(shortArea(top.properties.areaDesc));
+          } else {
+            barEl.textContent = "No critical storm warnings active right now — stay prepared anyway.";
+          }
+        }
+      })
+      .catch(function (err) {
+        console.warn("StormReady: live NWS fetch failed", err);
+        ["activeZonesGrid", "watchZonesGrid"].forEach(function (id) {
+          var el = document.getElementById(id);
+          if (el) el.innerHTML = '<div class="zone-card"><div class="meta">Live data temporarily unavailable — <a href="https://www.weather.gov/alerts" target="_blank" rel="noopener">check NWS alerts directly →</a></div></div>';
+        });
+        var mapLabelEl = document.getElementById("mapLabelText");
+        if (mapLabelEl) mapLabelEl.textContent = "Live data temporarily unavailable";
+        var barEl = document.getElementById("alertBarText");
+        if (barEl) barEl.textContent = "Live storm data temporarily unavailable — visit weather.gov/alerts for current warnings.";
+      });
+  }
+
+  loadStormData();
+  // Refresh in the background every 15 minutes for anyone who keeps the tab open.
+  setInterval(loadStormData, 15 * 60 * 1000);
+})();
+</script>
 
 </body>
 </html>
