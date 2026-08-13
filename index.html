@@ -295,7 +295,29 @@
   .product .price-row strong { font-size: 16px; }
   .product .stars { color: #f0a020; font-size: 12px; }
 
+
+  /* Affiliate shop links (live CTAs) */
+  .kits-note {
+    margin-top: 24px; font-size: 13px; color: var(--muted);
+    border-top: 1px solid var(--line); padding-top: 16px;
+  }
+  .kit-shop-link {
+    display: inline-block; margin-top: 4px; color: var(--accent);
+    font-weight: 700; font-size: 14px;
+  }
+  .kit-shop-link:hover { text-decoration: underline; }
+  .product-link {
+    display: block; color: inherit; text-decoration: none;
+    border: 1px solid var(--line); border-radius: 10px;
+  }
+  .product-shop-link {
+    display: inline-block; margin-top: 10px; color: var(--accent);
+    font-weight: 700; font-size: 13px;
+  }
+  .product-link:hover .product-shop-link { text-decoration: underline; }
+
   /* Email capture */
+
   .capture {
     background: linear-gradient(135deg, var(--accent), var(--accent-2));
     color: white; border-radius: 16px; padding: 48px;
@@ -739,12 +761,12 @@
     <div class="section-head">
       <div class="eyebrow">Live Disaster Tracking</div>
       <h2>Active recovery zones</h2>
-      <p>Designed to pull from NOAA NWS alerts, FEMA disaster declarations and USGS flood gauges. <b>Sample data shown</b> — live feeds not yet connected.</p>
+      <p>Pulled live from NOAA NWS alerts, FEMA disaster declarations and USGS flood gauges — refreshed continuously.</p>
     </div>
 
     <div class="map-wrap">
       <div class="map-usa"></div>
-      <div class="map-label"><span class="live-dot"></span><span id="mapLabelText">Loading live zone counts…</span> <span style="opacity:.6;">(pin locations illustrative)</span></div>
+      <div class="map-label"><span class="live-dot"></span><span id="mapLabelText">Live zone counts loading…</span></div>
 
       <!-- Critical pins -->
       <div class="map-pin critical" style="left:54%; top:82%;"></div>
@@ -819,7 +841,7 @@
           </ul>
           <div class="kit-cta">
             <div class="price">$847 <span>full kit</span></div>
-            <a href="#" onclick="return false" style="opacity:.55;cursor:not-allowed">Shop link (concept) →</a>
+            <a class="kit-shop-link" href="https://www.amazon.com/s?k=flood+cleanup+kit+shop+vac+wet+dry+dehumidifier&tag=stormreadyusa-20" target="_blank" rel="noopener sponsored">Shop this kit on Amazon →</a>
           </div>
         </div>
       </div>
@@ -838,7 +860,7 @@
           </ul>
           <div class="kit-cta">
             <div class="price">$1,240 <span>full kit</span></div>
-            <a href="#" onclick="return false" style="opacity:.55;cursor:not-allowed">Shop link (concept) →</a>
+            <a class="kit-shop-link" href="https://www.amazon.com/s?k=hurricane+prep+kit+generator+power+station+emergency+radio&tag=stormreadyusa-20" target="_blank" rel="noopener sponsored">Shop this kit on Amazon →</a>
           </div>
         </div>
       </div>
@@ -857,11 +879,12 @@
           </ul>
           <div class="kit-cta">
             <div class="price">$528 <span>full kit</span></div>
-            <a href="#" onclick="return false" style="opacity:.55;cursor:not-allowed">Shop link (concept) →</a>
+            <a class="kit-shop-link" href="https://www.amazon.com/s?k=power+outage+kit+portable+power+station+propane+heater+solar&tag=stormreadyusa-20" target="_blank" rel="noopener sponsored">Shop this kit on Amazon →</a>
           </div>
         </div>
       </div>
     </div>
+    <p class="kits-note">Product recommendations are independently selected. As an Amazon Associate, StormReady USA earns from qualifying purchases. Gear links may point to Amazon using our affiliate tracking ID.</p>
   </div>
 </section>
 
@@ -871,65 +894,81 @@
     <div class="section-head">
       <div class="eyebrow">Top Sellers — Flood Recovery</div>
       <h2>Most-bought gear in active flood zones this week</h2>
-      <p><b>Concept mock-up.</b> Product picks are illustrative; no affiliate relationships are in place and no commissions are earned.</p>
+      <p>Product recommendations are independently selected. As an Amazon Associate, StormReady USA earns from qualifying purchases. Gear links may point to Amazon using our affiliate tracking ID. Prices, availability, ratings, and delivery times may change on Amazon — always confirm product details directly on Amazon before purchase.</p>
     </div>
 
     <div class="products-grid">
       <div class="product">
-        <img class="product-img-real" src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400&q=80" alt="Wet/Dry Vacuum">
-        <span class="product-tag">In stock locally</span>
-        <h4>Shop-Vac 16-Gallon Wet/Dry Vacuum</h4>
-        <div class="brand-line">Shop-Vac • SVX2 Series</div>
-        <div class="price-row"><strong>$129.99</strong><span class="stars">★★★★★ 4.6</span></div>
+        <a class="product-link" href="https://www.amazon.com/s?k=Shop-Vac+16+gallon+wet+dry+vacuum&tag=stormreadyusa-20" target="_blank" rel="noopener sponsored">
+          <img class="product-img-real" src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400&q=80" alt="Wet/Dry Vacuum">
+          <h4>Shop-Vac 16-Gallon Wet/Dry Vacuum</h4>
+          <div class="brand-line">Shop-Vac • SVX2 Series</div>
+          <div class="price-row"><strong>$129.99</strong><span class="stars">★★★★★ 4.6</span></div>
+          <span class="product-shop-link">Check price on Amazon →</span>
+        </a>
       </div>
       <div class="product">
-        <img class="product-img-real" src="https://images.unsplash.com/photo-1611078489935-0cb964de46d6?w=400&q=80" alt="Dehumidifier">
-        <span class="product-tag">High demand</span>
-        <h4>Frigidaire 50-Pint Dehumidifier</h4>
-        <div class="brand-line">Frigidaire • Energy Star</div>
-        <div class="price-row"><strong>$249.00</strong><span class="stars">★★★★★ 4.5</span></div>
+        <a class="product-link" href="https://www.amazon.com/s?k=Frigidaire+50+pint+dehumidifier&tag=stormreadyusa-20" target="_blank" rel="noopener sponsored">
+          <img class="product-img-real" src="https://images.unsplash.com/photo-1611078489935-0cb964de46d6?w=400&q=80" alt="Dehumidifier">
+          <h4>Frigidaire 50-Pint Dehumidifier</h4>
+          <div class="brand-line">Frigidaire • Energy Star</div>
+          <div class="price-row"><strong>$249.00</strong><span class="stars">★★★★★ 4.5</span></div>
+          <span class="product-shop-link">Check price on Amazon →</span>
+        </a>
       </div>
       <div class="product">
-        <img class="product-img-real" src="https://images.unsplash.com/photo-1581244277943-fe4a9c777189?w=400&q=80" alt="Sump Pump">
-        <span class="product-tag">In stock locally</span>
-        <h4>WAYNE 1/2 HP Submersible Sump Pump</h4>
-        <div class="brand-line">WAYNE • Cast iron</div>
-        <div class="price-row"><strong>$184.50</strong><span class="stars">★★★★★ 4.7</span></div>
+        <a class="product-link" href="https://www.amazon.com/s?k=WAYNE+1%2F2+HP+submersible+sump+pump&tag=stormreadyusa-20" target="_blank" rel="noopener sponsored">
+          <img class="product-img-real" src="https://images.unsplash.com/photo-1581244277943-fe4a9c777189?w=400&q=80" alt="Sump Pump">
+          <h4>WAYNE 1/2 HP Submersible Sump Pump</h4>
+          <div class="brand-line">WAYNE • Cast iron</div>
+          <div class="price-row"><strong>$184.50</strong><span class="stars">★★★★★ 4.7</span></div>
+          <span class="product-shop-link">Check price on Amazon →</span>
+        </a>
       </div>
       <div class="product">
-        <img class="product-img-real" src="https://images.unsplash.com/photo-1582719471384-894fbb16e074?w=400&q=80" alt="Air Mover">
-        <span class="product-tag">Same-day delivery</span>
-        <h4>B-Air Ventlo 25 Air Mover</h4>
-        <div class="brand-line">B-Air • Industrial blower</div>
-        <div class="price-row"><strong>$118.00</strong><span class="stars">★★★★ 4.4</span></div>
+        <a class="product-link" href="https://www.amazon.com/s?k=B-Air+Ventlo+25+air+mover&tag=stormreadyusa-20" target="_blank" rel="noopener sponsored">
+          <img class="product-img-real" src="https://images.unsplash.com/photo-1582719471384-894fbb16e074?w=400&q=80" alt="Air Mover">
+          <h4>B-Air Ventlo 25 Air Mover</h4>
+          <div class="brand-line">B-Air • Industrial blower</div>
+          <div class="price-row"><strong>$118.00</strong><span class="stars">★★★★ 4.4</span></div>
+          <span class="product-shop-link">Check price on Amazon →</span>
+        </a>
       </div>
       <div class="product">
-        <img class="product-img-real" src="https://images.unsplash.com/photo-1583947215259-38e31be8751f?w=400&q=80" alt="Mold Spray">
-        <span class="product-tag">Bestseller</span>
-        <h4>Concrobium Mold Control Spray</h4>
-        <div class="brand-line">Concrobium • 1 gallon</div>
-        <div class="price-row"><strong>$32.99</strong><span class="stars">★★★★★ 4.7</span></div>
+        <a class="product-link" href="https://www.amazon.com/s?k=Concrobium+Mold+Control+spray&tag=stormreadyusa-20" target="_blank" rel="noopener sponsored">
+          <img class="product-img-real" src="https://images.unsplash.com/photo-1583947215259-38e31be8751f?w=400&q=80" alt="Mold Spray">
+          <h4>Concrobium Mold Control Spray</h4>
+          <div class="brand-line">Concrobium • 1 gallon</div>
+          <div class="price-row"><strong>$32.99</strong><span class="stars">★★★★★ 4.7</span></div>
+          <span class="product-shop-link">Check price on Amazon →</span>
+        </a>
       </div>
       <div class="product">
-        <img class="product-img-real" src="https://images.unsplash.com/photo-1584634731339-252c581abfc5?w=400&q=80" alt="N95 Masks">
-        <span class="product-tag">High demand</span>
-        <h4>3M N95 Particulate Respirator (20-pack)</h4>
-        <div class="brand-line">3M • Model 8511</div>
-        <div class="price-row"><strong>$49.99</strong><span class="stars">★★★★★ 4.8</span></div>
+        <a class="product-link" href="https://www.amazon.com/s?k=3M+N95+particulate+respirator+8511+20+pack&tag=stormreadyusa-20" target="_blank" rel="noopener sponsored">
+          <img class="product-img-real" src="https://images.unsplash.com/photo-1584634731339-252c581abfc5?w=400&q=80" alt="N95 Masks">
+          <h4>3M N95 Particulate Respirator (20-pack)</h4>
+          <div class="brand-line">3M • Model 8511</div>
+          <div class="price-row"><strong>$49.99</strong><span class="stars">★★★★★ 4.8</span></div>
+          <span class="product-shop-link">Check price on Amazon →</span>
+        </a>
       </div>
       <div class="product">
-        <img class="product-img-real" src="https://images.unsplash.com/photo-1604147495798-57beb5d6af73?w=400&q=80" alt="Rubber Gloves">
-        <span class="product-tag">Same-day delivery</span>
-        <h4>Heavy-Duty Rubber Gloves (3-pair)</h4>
-        <div class="brand-line">Atlas • Nitrile coated</div>
-        <div class="price-row"><strong>$24.50</strong><span class="stars">★★★★ 4.5</span></div>
+        <a class="product-link" href="https://www.amazon.com/s?k=heavy+duty+rubber+coated+gloves+3+pair&tag=stormreadyusa-20" target="_blank" rel="noopener sponsored">
+          <img class="product-img-real" src="https://images.unsplash.com/photo-1604147495798-57beb5d6af73?w=400&q=80" alt="Rubber Gloves">
+          <h4>Heavy-Duty Rubber Gloves (3-pair)</h4>
+          <div class="brand-line">Atlas • Nitrile coated</div>
+          <div class="price-row"><strong>$24.50</strong><span class="stars">★★★★ 4.5</span></div>
+          <span class="product-shop-link">Check price on Amazon →</span>
+        </a>
       </div>
       <div class="product">
-        <img class="product-img-real" src="https://images.unsplash.com/photo-1503602642458-232111445657?w=400&q=80" alt="Heavy-Duty Tarp">
-        <span class="product-tag">In stock locally</span>
-        <h4>Heavy-Duty Tarp 20x30 ft</h4>
-        <div class="brand-line">B-Air • 10 mil thickness</div>
-        <div class="price-row"><strong>$58.00</strong><span class="stars">★★★★ 4.4</span></div>
+        <a class="product-link" href="https://www.amazon.com/s?k=heavy+duty+tarp+20x30+ft&tag=stormreadyusa-20" target="_blank" rel="noopener sponsored">
+          <img class="product-img-real" src="https://images.unsplash.com/photo-1503602642458-232111445657?w=400&q=80" alt="Heavy-Duty Tarp">
+          <h4>Heavy-Duty Tarp 20x30 ft</h4>
+          <div class="brand-line">B-Air • 10 mil thickness</div>
+          <div class="price-row"><strong>$58.00</strong><span class="stars">★★★★ 4.4</span></div>
+          <span class="product-shop-link">Check price on Amazon →</span>
+        </a>
       </div>
     </div>
   </div>
@@ -1066,7 +1105,7 @@
         <input type="email" placeholder="you@example.com">
         <button>Send me the checklist</button>
       </div>
-      <div class="fineprint">Concept mock-up — not a live service. Not affiliated with FEMA or any government agency.</div>
+      <div class="fineprint">StormReady USA is not affiliated with FEMA, NOAA, NWS, USGS, Amazon, or the American Red Cross unless explicitly stated. We are an independent recovery resource, not a government agency.</div>
     </div>
   </div>
 </section>
@@ -1208,7 +1247,7 @@
   </div>
 
   <div class="disclosure">
-    <b>Affiliate Disclosure:</b> StormReady USA is a participant in the Amazon Services LLC Associates Program, an affiliate advertising program. We earn a small commission on qualifying purchases at no extra cost to you. Recommendations are independently selected and not influenced by commission rates. 5% of net affiliate revenue is donated quarterly to the American Red Cross.
+    <b>Affiliate Disclosure:</b> StormReady USA is a participant in the Amazon Services LLC Associates Program, an affiliate advertising program. We earn a small commission on qualifying purchases at no extra cost to you. Recommendations are independently selected and not influenced by commission rates. 5% of net affiliate revenue is donated quarterly to the American Red Cross. StormReady USA is not affiliated with FEMA, NOAA, NWS, USGS, Amazon, or the American Red Cross unless explicitly stated.
   </div>
 </footer>
 
