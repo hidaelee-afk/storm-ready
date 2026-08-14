@@ -66,6 +66,9 @@
 
   .nav-links { display:flex; gap:22px; font-size:14px; }
   .nav-links a { color:var(--ink); font-weight:500; text-decoration:none; }
+  .item-img-ph,.kit-img-ph,.prod-img-ph { display:flex; flex-direction:column; align-items:center; justify-content:center; gap:6px; min-height:160px; background:#eef3f7; border:1px solid var(--line); border-radius:12px; color:#5b7a90; font-size:13px; text-align:center; padding:14px; }
+  .item-img-ph span,.kit-img-ph span,.prod-img-ph span { font-size:34px; }
+  .kit-img-ph { min-height:180px; }
 </style>
 </head>
 <body>
@@ -198,7 +201,7 @@ function render(){
       var q = qtyFor(p);
       html += ''
         + '<div class="card">'
-        + '<a href="'+amz(p.asin)+'" target="_blank" rel="noopener"><img src="https://m.media-amazon.com/images/I/'+p.img+'.__SL1500_.jpg" data-compliance="replace-with-paapi" alt="'+p.title+'"></a>'
+        + '<a href="'+amz(p.asin)+'" target="_blank" rel="noopener"><span class="prod-img-ph" aria-label="'+p.title+'">📦</span></a>'
         + '<h3>'+p.title+'</h3>'
         + '<div class="note">'+p.note+'</div>'
         + '<div class="price">'+money(p.price)+'</div>'
