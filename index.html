@@ -1004,7 +1004,7 @@
         <div class="eyebrow">Free Resource</div>
         <h2 style="font-size:32px; margin:0 0 16px; letter-spacing:-0.5px;">The first 24 hours after a flood determine the next 6 months.</h2>
         <p style="color:var(--muted); font-size:16px; margin-bottom:24px;">Our regional recovery checklists walk you through every step — what to do before water touches a wall, what to throw away vs. salvage, and which insurance claims have hard deadlines.</p>
-        <a href="#signup" class="btn btn-primary">Get the free checklist →</a>
+        <a href="checklist.html" class="btn btn-primary">Get the free checklist →</a>
       </div>
       <div class="checklist-card">
         <span class="stamp">✓ FEMA-aligned</span>
@@ -1122,11 +1122,17 @@
     <div class="capture">
       <h2>Get prepared before the next storm hits your ZIP.</h2>
       <p>Free regional checklists, 72-hour disaster alerts for your area, and the gear list we'd buy ourselves. No spam. Unsubscribe anytime.</p>
-      <div class="capture-form">
-        <input type="text" placeholder="ZIP code (e.g. 77002)" style="max-width:140px;">
-        <input type="email" placeholder="you@example.com">
-        <button>Send me the checklist</button>
-      </div>
+      <form class="capture-form" id="captureForm" action="checklist.html" method="get">
+        <input type="text" name="zip" id="zipInput" placeholder="ZIP code (e.g. 77002)" style="max-width:140px;" required>
+        <input type="email" name="email" placeholder="you@example.com">
+        <button type="submit">Send me the checklist</button>
+      </form>
+      <script>
+        document.getElementById('captureForm').addEventListener('submit', function(e){
+          var z = document.getElementById('zipInput').value.trim();
+          if (z) try { localStorage.setItem('sr_zip', z); } catch(_){}
+        });
+      </script>
       <div class="fineprint">StormReady USA is not affiliated with FEMA, NOAA, NWS, USGS, Amazon, or the American Red Cross unless explicitly stated. We are an independent recovery resource, not a government agency.</div>
     </div>
   </div>
@@ -1257,15 +1263,15 @@
     <div>
       <h5>Company</h5>
       <a href="#about">About</a>
-      <a href="#">Donations</a>
-      <a href="#">Press</a>
-      <a href="mailto:hello@stormreadyusa.example" >Contact</a>
+      <a href="legal.html#affiliate">Donations</a>
+      <a href="legal.html">Press</a>
+      <a href="mailto:hello@stormreadyusa.org">Contact</a>
     </div>
   </div>
 
   <div class="footer-bottom">
     <span>© 2026 StormReady USA. All rights reserved.</span>
-    <span>Privacy • Terms • Affiliate Disclosure</span>
+    <span><a href="legal.html#privacy" style="color:#aebbcf;">Privacy</a> • <a href="legal.html#terms" style="color:#aebbcf;">Terms</a> • <a href="legal.html#affiliate" style="color:#aebbcf;">Affiliate Disclosure</a></span>
   </div>
 
   <div class="disclosure">
