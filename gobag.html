@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Build Your Go-Bag — StormReady USA</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%230f6b97'/%3E%3Cstop offset='1' stop-color='%230a4f72'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='32' height='32' rx='7' fill='url(%23g)'/%3E%3Ctext x='16' y='22' font-size='18' text-anchor='middle'%3E%E2%9B%88%3C/text%3E%3C/svg%3E">
+<style>
+  :root { --ink:#0b1220; --muted:#6b7a90; --line:#e4e8ef; --accent:#0f6b97; --accent-2:#0a4f72; --ok:#15805c; --card:#fff; }
+  * { box-sizing:border-box; }
+  body { font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif; color:var(--ink); background:#f7f9fc; line-height:1.6; margin:0; }
+  header.top { background:white; border-bottom:1px solid var(--line); padding:16px 32px; display:flex; align-items:center; justify-content:space-between; position:sticky; top:0; z-index:20; }
+  .brand { display:flex; align-items:center; gap:10px; font-weight:800; font-size:20px; letter-spacing:-.3px; text-decoration:none; color:var(--ink); }
+  .brand-logo { width:32px; height:32px; border-radius:8px; background:linear-gradient(135deg,var(--accent),var(--accent-2)); display:grid; place-items:center; color:white; font-size:18px; }
+  .top a.back { color:var(--ink); font-weight:600; font-size:14px; }
+  .wrap { max-width:1080px; margin:0 auto; padding:32px 24px 64px; }
+  h1 { font-size:34px; letter-spacing:-1px; margin:0 0 4px; }
+  .sub { color:var(--muted); margin:0 0 24px; }
+  .sizer { background:white; border:1px solid var(--line); border-radius:14px; padding:18px 20px; margin-bottom:24px; display:flex; flex-wrap:wrap; gap:14px; align-items:center; }
+  .sizer label { font-weight:700; font-size:14px; }
+  .sizer button { font-family:inherit; font-size:14px; font-weight:700; border:1px solid var(--line); background:#fff; color:var(--ink); border-radius:24px; padding:9px 18px; cursor:pointer; }
+  .sizer button.active { background:var(--accent); color:#fff; border-color:var(--accent); }
+  .cat { margin:28px 0 8px; font-size:20px; letter-spacing:-.4px; }
+  .cat small { color:var(--muted); font-weight:500; font-size:14px; }
+  .grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(240px,1fr)); gap:16px; }
+  .card { background:var(--card); border:1px solid var(--line); border-radius:14px; padding:16px; display:flex; flex-direction:column; }
+  .card img { width:100%; height:160px; object-fit:contain; border-radius:8px; background:#f3f6fa; }
+  .card h3 { font-size:15px; margin:12px 0 4px; line-height:1.35; }
+  .card .price { color:var(--accent-2); font-weight:800; font-size:16px; }
+  .card .row { display:flex; align-items:center; justify-content:space-between; margin-top:auto; padding-top:12px; }
+  .qty { font-size:13px; color:var(--muted); }
+  .qty b { color:var(--ink); font-size:15px; }
+  .toggle { font-family:inherit; font-size:13px; font-weight:700; border-radius:8px; padding:8px 14px; cursor:pointer; border:1px solid var(--accent); background:#fff; color:var(--accent); }
+  .toggle.on { background:var(--accent); color:#fff; }
+  .search-card { border-style:dashed; }
+  .search-card a { font-weight:700; color:var(--accent); text-decoration:none; }
+  .actions { position:sticky; bottom:0; background:white; border-top:1px solid var(--line); padding:16px 24px; display:flex; gap:12px; flex-wrap:wrap; justify-content:center; margin-top:32px; z-index:20; }
+  .actions button { font-family:inherit; font-size:15px; font-weight:700; border-radius:10px; padding:13px 22px; cursor:pointer; border:none; }
+  .btn-cart { background:var(--accent); color:#fff; }
+  .btn-share { background:#fff; color:var(--accent); border:1px solid var(--accent); }
+  .btn-check { background:var(--ok); color:#fff; }
+  .toast { position:fixed; bottom:90px; left:50%; transform:translateX(-50%); background:var(--ink); color:#fff; padding:12px 20px; border-radius:10px; font-size:14px; font-weight:600; opacity:0; transition:opacity .25s; pointer-events:none; z-index:50; }
+  .toast.show { opacity:1; }
+  .water-sec { background:white; border:1px solid var(--line); border-radius:14px; padding:22px; margin:32px 0; }
+  .water-sec h2 { margin:0 0 6px; font-size:22px; }
+  .water-sec p { color:var(--muted); margin:0 0 14px; }
+  .water-form { display:flex; gap:10px; flex-wrap:wrap; align-items:center; }
+  .water-form input { font-family:inherit; font-size:14px; padding:11px 14px; border:1px solid var(--line); border-radius:8px; max-width:160px; }
+  .water-form button { font-family:inherit; font-size:14px; font-weight:700; background:var(--accent); color:#fff; border:none; border-radius:8px; padding:11px 18px; cursor:pointer; }
+  .disclaimer { background:#fff4f1; border:1px solid #f3c9c0; color:#7a2a1c; border-radius:10px; padding:14px 16px; font-size:13px; margin-top:24px; }
+  footer { background:var(--ink); color:#aebbcf; padding:28px 32px; text-align:center; font-size:13px; }
+  footer a { color:#aebbcf; }
+  .affil { color:var(--muted); font-size:12px; text-align:center; margin-top:8px; }
+</style>
+</head>
+<body>
+<header class="top">
+  <a class="brand" href="index.html"><div class="brand-logo">⛈</div><span>StormReady<span style="color:#5fa9d0;">USA</span></span></a>
+  <a class="back" href="index.html">← Home</a>
+</header>
+
+<div class="wrap">
+  <h1>Build Your Go-Bag</h1>
+  <p class="sub">Pick your household size — we scale quantities and bundle real, storm-tested gear. Every item opens on Amazon with our referral link. Add the whole bag to cart in one tap, or copy the list to share with neighbors.</p>
+
+  <div class="sizer">
+    <label>Household size:</label>
+    <button data-size="1" class="active">Just me (1)</button>
+    <button data-size="2">Couple (2)</button>
+    <button data-size="3">Family (3–4)</button>
+    <button data-size="5">Extended (5+)</button>
+  </div>
+
+  <div id="catalog"></div>
+
+  <!-- Food & Water: outsider / evacuation sub-section -->
+  <div class="water-sec">
+    <h2>Food &amp; Water — the evacuation essentials</h2>
+    <p>Water and calories are the first things to run out. Order potable water for delivery to your area before you need it — fast shipping beats empty shelves.</p>
+    <div class="water-form">
+      <input type="text" id="waterZip" placeholder="Your ZIP" maxlength="10">
+      <button id="waterBtn">Find water delivered to my area →</button>
+    </div>
+    <p class="affil" style="text-align:left;margin-top:12px;">Prefer to stock up yourself? Add the <a href="#catalog">water container</a> above and a food-kit search to your bag.</p>
+  </div>
+
+  <p style="margin-top:20px;"><a class="btn-check" style="display:inline-block;text-decoration:none;padding:13px 22px;border-radius:10px;font-weight:700;" href="checklist.html">📋 Open the full packing &amp; recovery checklist</a></p>
+
+  <div class="disclaimer">
+    <b>Not official guidance.</b> This builder is a preparedness aid, not a substitute for instructions from FEMA, NOAA/NWS, or local emergency management. During an active emergency, always follow official orders first. Product availability and pricing change; links go to Amazon with our Associates tag.
+  </div>
+  <p class="affil">As an Amazon Associate, StormReady USA earns from qualifying purchases.</p>
+</div>
+
+<div class="actions">
+  <button class="btn-cart" id="cartBtn">🛒 Add entire bag to cart</button>
+  <button class="btn-share" id="shareBtn">🔗 Copy shareable list</button>
+  <a class="btn-check" style="text-decoration:none;display:inline-block;" href="checklist.html">📋 Packing checklist</a>
+</div>
+<div class="toast" id="toast"></div>
+
+<footer>
+  © 2026 StormReady USA. All rights reserved. &nbsp;•&nbsp; <a href="index.html">Home</a> &nbsp;•&nbsp; <a href="legal.html#privacy">Privacy</a> &nbsp;•&nbsp; <a href="legal.html#terms">Terms</a> &nbsp;•&nbsp; <a href="legal.html#affiliate">Affiliate Disclosure</a>
+</footer>
+
+<script>
+// 12 verified US ASINs (real images, real .com links, tag stormreadyusa-20)
+var PRODUCTS = [
+  { asin:"B07L3GGCJP", img:"71v5xQbAwtL", title:"5-Gallon Collapsible Water Container (BPA-free)", price:17, cat:"Water & Hydration", scale:true },
+  { asin:"B0GGWHJ8XJ", img:"81JSc+jt-rL", title:"MalloMe LED Camping Lantern (2-pack)", price:20, cat:"Light & Comms", scale:false },
+  { asin:"B00176T9OY", img:"61tNNi-xqiL", title:"Midland Emergency Crank Weather Radio (ER210)", price:40, cat:"Light & Comms", scale:false },
+  { asin:"B07SM5HBK1", img:"71B4egp+P7L", title:"Jackery Explorer 500 Power Station (518Wh)", price:399, cat:"Power", scale:false },
+  { asin:"B008MCUZZS", img:"71pZn9wlmJL", title:"3M N95 Respirator (20-pack)", price:25, cat:"Protection", scale:true },
+  { asin:"B004BR8KB4", img:"71aVbZuV+PL", title:"GLOVEWORKS Nitrile Work Gloves", price:18, cat:"Protection", scale:true },
+  { asin:"B0BH65VPP6", img:"81u4AidFY+L", title:"Heavy-Duty Tarp 20x30 ft (10 mil)", price:58, cat:"Shelter", scale:false },
+  { asin:"B095VT6ZWD", img:"71coHsAzAgL", title:"Shop-Vac 16-Gallon Wet/Dry Vacuum", price:135, cat:"Cleanup & Recovery", scale:false },
+  { asin:"B08NWRXW2N", img:"71Bx-IG60uL", title:"Vacmaster Air Mover (Carpet Blower)", price:118, cat:"Cleanup & Recovery", scale:false },
+  { asin:"B00ZP5BQAS", img:"61cKkMrve6L", title:"Superior Pump 1/2 HP Utility Sump Pump", price:85, cat:"Cleanup & Recovery", scale:false },
+  { asin:"B0FP1L6W89", img:"51RZVjNAWjL", title:"Frigidaire 50-Pint Dehumidifier", price:249, cat:"Cleanup & Recovery", scale:false },
+  { asin:"B0CPT6WY76", img:"71yps3XmPxL", title:"Champion 2000W Inverter Generator", price:529, cat:"Power", scale:false }
+];
+// Curated search starters (no fabricated ASINs — real referral search)
+var SEARCHES = [
+  { title:"Emergency go-bag backpack (72-hr kit)", k:"emergency+go+bag+backpack+72+hour+kit", cat:"The Bag" },
+  { title:"Emergency food bars / 72-hr ration", k:"emergency+food+bars+72+hour+survival+ration", cat:"Food" }
+];
+
+var TAG = "stormreadyusa-20";
+var sizeMult = { "1":1, "2":1.5, "3":2, "5":3 };
+var currentSize = "1";
+var selected = {}; // asin -> bool
+
+function qtyFor(p){
+  var m = sizeMult[currentSize];
+  var q = p.scale ? Math.max(1, Math.round(m)) : (m > 1 ? 2 : 1);
+  return q;
+}
+function amz(asin){ return "https://www.amazon.com/dp/" + asin + "?tag=" + TAG; }
+
+function render(){
+  var cats = {};
+  PRODUCTS.forEach(function(p){ (cats[p.cat] = cats[p.cat] || []).push(p); });
+  Object.keys(SEARCHES).forEach(function(_){});
+  var html = "";
+  // The Bag + Food searches first
+  html += catHeader("The Bag & Food", "Start with a container and calories — curated searches.");
+  html += '<div class="grid">';
+  SEARCHES.forEach(function(s){
+    var url = "https://www.amazon.com/s?k=" + s.k + "&tag=" + TAG;
+    html += '<div class="card search-card"><h3>'+s.title+'</h3><div class="row"><span class="qty">Curated search</span><a class="toggle on" href="'+url+'" target="_blank" rel="noopener">Shop →</a></div></div>';
+  });
+  html += '</div>';
+  // Real products by category
+  Object.keys(cats).forEach(function(c){
+    html += catHeader(c, null);
+    html += '<div class="grid">';
+    cats[c].forEach(function(p){
+      var on = selected[p.asin] !== false;
+      var q = qtyFor(p);
+      html += ''
+        + '<div class="card">'
+        + '<a href="'+amz(p.asin)+'" target="_blank" rel="noopener"><img src="https://m.media-amazon.com/images/I/'+p.img+'.__SL1500_.jpg" data-compliance="replace-with-paapi" alt="'+p.title+'"></a>'
+        + '<h3>'+p.title+'</h3>'
+        + '<div class="price">$'+p.price+'</div>'
+        + '<div class="row"><span class="qty">Qty: <b>'+q+'</b></span>'
+        + '<button class="toggle'+(on?' on':'')+'" data-asin="'+p.asin+'">'+(on?'✓ In bag':'Add')+'</button></div>'
+        + '</div>';
+    });
+    html += '</div>';
+  });
+  document.getElementById('catalog').innerHTML = html;
+  document.querySelectorAll('.toggle[data-asin]').forEach(function(b){
+    b.addEventListener('click', function(){
+      var a = b.getAttribute('data-asin');
+      selected[a] = (selected[a] === false);
+      render();
+    });
+  });
+}
+function catHeader(name, note){
+  return '<div class="cat">'+name+(note?' <small>'+note+'</small>':'')+'</div>';
+}
+
+document.querySelectorAll('.sizer button').forEach(function(b){
+  b.addEventListener('click', function(){
+    document.querySelectorAll('.sizer button').forEach(function(x){x.classList.remove('active');});
+    b.classList.add('active');
+    currentSize = b.getAttribute('data-size');
+    render();
+  });
+});
+
+function selectedItems(){
+  return PRODUCTS.filter(function(p){ return selected[p.asin] !== false; });
+}
+
+document.getElementById('cartBtn').addEventListener('click', function(){
+  var items = selectedItems();
+  if (!items.length) return toast("Add at least one item to your bag.");
+  var url = "https://www.amazon.com/gp/aws/cart/add.html?AssociateTag=" + TAG;
+  items.forEach(function(p, i){
+    var n = i+1;
+    url += "&ASIN."+n+"="+p.asin+"&Quantity."+n+"="+qtyFor(p);
+  });
+  window.open(url, "_blank", "noopener");
+  toast("Opening Amazon cart with your "+items.length+" items…");
+});
+
+document.getElementById('shareBtn').addEventListener('click', function(){
+  var items = selectedItems();
+  var lines = ["STORMREADY USA — MY GO-BAG LIST","Household size: "+(currentSize==="1"?"1":currentSize==="2"?"2":currentSize==="3"?"3-4":"5+"),""];
+  items.forEach(function(p){ lines.push("• "+p.title+" (qty "+qtyFor(p)+"): "+amz(p.asin)); });
+  lines.push("","Built at stormreadyusa.org/gobag.html — gear that helps you recover.");
+  var text = lines.join("\n");
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(text).then(function(){ toast("List copied — share your referral links!"); },
+      function(){ fallbackCopy(text); });
+  } else { fallbackCopy(text); }
+});
+function fallbackCopy(text){
+  var ta = document.createElement('textarea'); ta.value = text; document.body.appendChild(ta);
+  ta.select(); try { document.execCommand('copy'); toast("List copied — share your referral links!"); } catch(e){ toast("Copy failed — select manually."); }
+  document.body.removeChild(ta);
+}
+
+document.getElementById('waterBtn').addEventListener('click', function(){
+  var z = document.getElementById('waterZip').value.trim();
+  var k = "emergency+water+delivery" + (z ? "+" + encodeURIComponent(z) : "");
+  window.open("https://www.amazon.com/s?k="+k+"&tag="+TAG, "_blank", "noopener");
+});
+
+function toast(msg){
+  var t = document.getElementById('toast'); t.textContent = msg; t.classList.add('show');
+  setTimeout(function(){ t.classList.remove('show'); }, 2600);
+}
+
+render();
+</script>
+</body>
+</html>
