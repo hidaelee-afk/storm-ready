@@ -4,28 +4,27 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Comfort & Entertainment — StormReady USA</title>
-<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%237c3aed'/%3E%3Cstop offset='1' stop-color='%235b21b6'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='32' height='32' rx='7' fill='url(%23g)'/%3E%3Ctext x='16' y='22' font-size='18' text-anchor='middle'%3E%E2%9C%A8%3C/text%3E%3C/svg%3E">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2032%2032'%3E%3Cdefs%3E%3ClinearGradient%20id='sg'%20x1='0'%20y1='0'%20x2='1'%20y2='1'%3E%3Cstop%20offset='0'%20stop-color='%230f6b97'/%3E%3Cstop%20offset='1'%20stop-color='%230a4f72'/%3E%3C/linearGradient%3E%3C/defs%3E%3Cpath%20d='M16%202%20L28%206%20V15%20C28%2023%2022%2028%2016%2030%20C10%2028%204%2023%204%2015%20V6%20Z'%20fill='url(%23sg)'/%3E%3Cpath%20d='M10%2011%20H20%20a4%204%200%201%201%20-1.2%207.8%20H13%20l3.2%20-3%20h3.6%20a1%201%200%201%200%20-1%20-2%20H10%20Z'%20fill='%23eaf3f8'/%3E%3Cpath%20d='M16.5%2017.5%20l-3%206%20h2.8%20l-1%204%205%20-7%20h-3%20l2%20-3%20Z'%20fill='%23f6c453'/%3E%3C/svg%3E">
 <style>
-  :root { --ink:#0b1220; --muted:#6b7a90; --line:#e4e8ef; --accent:#7c3aed; --accent-2:#5b21b6; --ok:#15805c; --card:#fff; }
+  :root { --ink:#0b1220; --muted:#6b7a90; --line:#e4e8ef; --accent:#0f6b97; --accent-2:#0a4f72; --ok:#15805c; --card:#fff; }
   * { box-sizing:border-box; }
   body { font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif; color:var(--ink); background:#f7f9fc; line-height:1.6; margin:0; }
   header.top { background:white; border-bottom:1px solid var(--line); padding:16px 32px; display:flex; align-items:center; justify-content:space-between; position:sticky; top:0; z-index:30; }
   .brand { display:flex; align-items:center; gap:10px; font-weight:800; font-size:20px; letter-spacing:-.3px; text-decoration:none; color:var(--ink); }
-  .brand-logo { width:32px; height:32px; border-radius:8px; background:linear-gradient(135deg,var(--accent),var(--accent-2)); display:grid; place-items:center; color:white; font-size:18px; }
+  .brand-logo { width:32px; height:32px; border-radius:8px; overflow:hidden; display:grid; place-items:center; }
   .top a.back { color:var(--ink); font-weight:600; font-size:14px; }
   .urgent { background:#fff7ed; border-bottom:2px solid #fdba74; color:#7c2d12; padding:12px 24px; text-align:center; font-size:14px; font-weight:600; }
   .urgent b { color:#9a3412; }
-  .wrap { max-width:1120px; margin:0 auto; padding:30px 24px 90px; }
+  .wrap { max-width:1120px; margin:0 auto; padding:30px 24px 70px; }
   h1 { font-size:32px; letter-spacing:-1px; margin:0 0 4px; }
   .sub { color:var(--muted); margin:0 0 22px; }
   .note-band { background:white; border:1px solid var(--line); border-left:4px solid var(--accent); border-radius:12px; padding:16px 18px; margin-bottom:24px; }
   .note-band h2 { margin:0 0 6px; font-size:18px; }
   .note-band p { margin:0; color:var(--muted); font-size:14px; }
   .cat { font-size:18px; margin:26px 0 10px; letter-spacing:-.3px; }
-  .cat small { color:var(--muted); font-weight:500; font-size:13px; }
   .grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(240px,1fr)); gap:16px; }
   .card { background:var(--card); border:1px solid var(--line); border-radius:14px; padding:16px; display:flex; flex-direction:column; }
-  .card .pill { align-self:flex-start; background:#f1ecfd; color:var(--accent-2); font-size:11px; font-weight:700; border-radius:6px; padding:3px 8px; margin-bottom:8px; }
+  .card .pill { align-self:flex-start; background:#e7f1f7; color:var(--accent-2); font-size:11px; font-weight:700; border-radius:6px; padding:3px 8px; margin-bottom:8px; }
   .card h3 { font-size:15px; margin:0 0 6px; line-height:1.35; }
   .card .why { color:var(--muted); font-size:13px; margin-bottom:10px; }
   .card .row { margin-top:auto; }
@@ -38,40 +37,44 @@
   .cta-row a { font-weight:700; text-decoration:none; padding:13px 22px; border-radius:10px; }
   .btn-a { background:var(--accent); color:#fff; }
   .btn-b { background:#fff; color:var(--accent); border:1px solid var(--accent); }
+  .cart-note { background:#eef6fb; border:1px solid #cfe3ef; color:#0a4f72; border-radius:10px; padding:12px 16px; font-size:13px; margin-top:18px; }
+  .cart-note b { color:#0a4f72; }
 </style>
 </head>
 <body>
 <header class="top">
-  <a class="brand" href="index.html"><div class="brand-logo">✨</div><span>StormReady<span style="color:#a78bfa;">USA</span></span></a>
+  <a class="brand" href="index.html"><div class="brand-logo"><svg viewBox="0 0 32 32" width="32" height="32" aria-hidden="true"><defs><linearGradient id="sg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#0f6b97"/><stop offset="1" stop-color="#0a4f72"/></linearGradient></defs><path d="M16 2 L28 6 V15 C28 23 22 28 16 30 C10 28 4 23 4 15 V6 Z" fill="url(#sg)"/><path d="M10 11 H20 a4 4 0 1 1 -1.2 7.8 H13 l3.2 -3 h3.6 a1 1 0 1 0 -1 -2 H10 Z" fill="#eaf3f8"/><path d="M16.5 17.5 l-3 6 h2.8 l-1 4 5 -7 h-3 l2 -3 Z" fill="#f6c453"/></svg></div><span>StormReady<span style="color:#5fa9d0;">USA</span></span></a>
   <a class="back" href="index.html">← Home</a>
 </header>
-<div class="urgent">⏳ <b>Prepare now.</b> Our curated link credit expires 24 hours after you open it — and if a storm hits, Amazon Prime delivery can fail when roads and warehouses are down. <b>Order today, be ready before you need it.</b></div>
+<div class="urgent">⏳ <b>Prepare now.</b> Order within 24 hours — when a storm hits, Amazon Prime delivery can fail as roads and warehouses go down. <b>Order today, be ready before you need it.</b></div>
 
 <div class="wrap">
   <h1>Comfort &amp; Entertainment for Outage Days</h1>
-  <p class="sub">When the power's out for days, morale matters as much as supplies. Our experts curated these keyword searches so you can grab what keeps kids calm and adults sane — before the storm, not during.</p>
+  <p class="sub">When the power is out for days, morale matters as much as supplies. Our experts curated these searches so you can grab what keeps kids calm and adults steady — before the storm, not during.</p>
 
   <div class="note-band">
-    <h2>Why this section exists</h2>
-    <p>After a hurricane, families often lose power for 3–10 days. Bored, restless kids and no news turn a manageable situation stressful. A few cheap, shelf-stable comforts — books, cards, a power bank for phones, a radio — keep everyone steady. These categories also tend to earn a healthy commission, so preparing helps you and supports this site.</p>
+    <h2>Why this section matters</h2>
+    <p>After a hurricane, families often lose power for 3–10 days. Bored, restless kids and no news turn a manageable situation stressful. A few inexpensive comforts — books, cards, a power bank for phones, a radio — keep everyone steady. Preparing ahead supports your household and this site.</p>
   </div>
 
-  <div class="cat">Keep phones &amp; devices alive <small>· Electronics (4% commission)</small></div>
+  <div class="cat">Keep phones &amp; devices alive</div>
   <div class="grid">
-    <div class="card"><span class="pill">Electronics · 4%</span><h3>Portable Phone Power Bank (20,000mAh)</h3><div class="why">Charge phones for days when the grid is down — stay reachable for emergency alerts.</div><div class="row"><a class="prepare" href="https://www.amazon.com/s?k=portable+phone+power+bank+20000mAh&tag=stormreadyusa-20" target="_blank" rel="noopener">Prepare →</a></div></div>
-    <div class="card"><span class="pill">Electronics · 4%</span><h3>Hand-Crank / Solar Emergency Radio</h3><div class="why">NOAA weather + phone charger in one. No batteries needed.</div><div class="row"><a class="prepare" href="https://www.amazon.com/s?k=hand+crank+solar+emergency+radio+NOAA&tag=stormreadyusa-20" target="_blank" rel="noopener">Prepare →</a></div></div>
-    <div class="card"><span class="pill">Electronics · 4%</span><h3>Rechargeable LED Camping Lights</h3><div class="why">Soft light for evenings; less harsh than a lantern for kids' bedtime.</div><div class="row"><a class="prepare" href="https://www.amazon.com/s?k=rechargeable+LED+camping+light&tag=stormreadyusa-20" target="_blank" rel="noopener">Prepare →</a></div></div>
+    <div class="card"><span class="pill">Electronics</span><h3>Portable Phone Power Bank (20,000mAh)</h3><div class="why">Charge phones for days when the grid is down — stay reachable for emergency alerts.</div><div class="row"><a class="prepare" href="https://www.amazon.com/s?k=portable+phone+power+bank+20000mAh&tag=stormreadyusa-20" target="_blank" rel="noopener">Prepare →</a></div></div>
+    <div class="card"><span class="pill">Electronics</span><h3>Hand-Crank / Solar Emergency Radio</h3><div class="why">NOAA weather + phone charger in one. No batteries needed.</div><div class="row"><a class="prepare" href="https://www.amazon.com/s?k=hand+crank+solar+emergency+radio+NOAA&tag=stormreadyusa-20" target="_blank" rel="noopener">Prepare →</a></div></div>
+    <div class="card"><span class="pill">Electronics</span><h3>Rechargeable LED Camping Lights</h3><div class="why">Soft light for evenings; less harsh than a lantern for kids' bedtime.</div><div class="row"><a class="prepare" href="https://www.amazon.com/s?k=rechargeable+LED+camping+light&tag=stormreadyusa-20" target="_blank" rel="noopener">Prepare →</a></div></div>
   </div>
 
-  <div class="cat">Calm the kids <small>· Toys &amp; Games (3% commission)</small></div>
+  <div class="cat">Calm the kids</div>
   <div class="grid">
-    <div class="card"><span class="pill">Toys · 3%</span><h3>Travel Card Games &amp; Uno</h3><div class="why">Tiny, no batteries, hours of distraction. One deck per kid.</div><div class="row"><a class="prepare" href="https://www.amazon.com/s?k=uno+card+game+travel&tag=stormreadyusa-20" target="_blank" rel="noopener">Prepare →</a></div></div>
-    <div class="card"><span class="pill">Toys · 3%</span><h3>Coloring &amp; Activity Books</h3><div class="why">Cheap, calming, no screen needed. Stock a few per child.</div><div class="row"><a class="prepare" href="https://www.amazon.com/s?k=kids+coloring+activity+book&tag=stormreadyusa-20" target="_blank" rel="noopener">Prepare →</a></div></div>
-    <div class="card"><span class="pill">Toys · 3%</span><h3>Mini Puzzle Sets</h3><div class="why">Keeps hands busy during long, dark evenings.</div><div class="row"><a class="prepare" href="https://www.amazon.com/s?k=mini+puzzle+set+kids&tag=stormreadyusa-20" target="_blank" rel="noopener">Prepare →</a></div></div>
+    <div class="card"><span class="pill">Toys &amp; Games</span><h3>Travel Card Games &amp; Uno</h3><div class="why">Tiny, no batteries, hours of distraction. One deck per kid.</div><div class="row"><a class="prepare" href="https://www.amazon.com/s?k=uno+card+game+travel&tag=stormreadyusa-20" target="_blank" rel="noopener">Prepare →</a></div></div>
+    <div class="card"><span class="pill">Toys &amp; Games</span><h3>Coloring &amp; Activity Books</h3><div class="why">Cheap, calming, no screen needed. Stock a few per child.</div><div class="row"><a class="prepare" href="https://www.amazon.com/s?k=kids+coloring+activity+book&tag=stormreadyusa-20" target="_blank" rel="noopener">Prepare →</a></div></div>
+    <div class="card"><span class="pill">Toys &amp; Games</span><h3>Mini Puzzle Sets</h3><div class="why">Keeps hands busy during long, dark evenings.</div><div class="row"><a class="prepare" href="https://www.amazon.com/s?k=mini+puzzle+set+kids&tag=stormreadyusa-20" target="_blank" rel="noopener">Prepare →</a></div></div>
   </div>
+
+  <div class="cart-note">💡 <b>Prepare your plan in one tap.</b> When you choose items, they open in your Amazon cart — you can add, remove, or adjust quantities there before checkout. You stay in control.</div>
 
   <div class="cta-row">
-    <a class="btn-a" href="https://www.amazon.com/s?k=emergency+family+activity+kit+books+games&tag=stormreadyusa-20" target="_blank" rel="noopener">🛒 Browse the full curated entertainment list</a>
+    <a class="btn-a" href="https://www.amazon.com/s?k=emergency+family+activity+kit+books+games&tag=stormreadyusa-20" target="_blank" rel="noopener">🛒 Browse the full curated list</a>
     <a class="btn-b" href="food.html">🥫 Add a food &amp; water plan</a>
     <a class="btn-b" href="gobag.html">🎒 Build your go-bag</a>
   </div>
@@ -83,7 +86,17 @@
 </div>
 
 <footer>
-  © 2026 StormReady USA. All rights reserved. &nbsp;•&nbsp; <a href="index.html">Home</a> &nbsp;•&nbsp; <a href="gobag.html">Go-Bag Builder</a> &nbsp;•&nbsp; <a href="food.html">Food & Water</a> &nbsp;•&nbsp; <a href="entertainment.html">Comfort & Entertainment</a> &nbsp;•&nbsp; <a href="legal.html#privacy">Privacy</a> &nbsp;•&nbsp; <a href="legal.html#terms">Terms</a> &nbsp;•&nbsp; <a href="legal.html#affiliate">Affiliate Disclosure</a>
+  © 2026 StormReady USA. All rights reserved. &nbsp;•&nbsp;
+  <a href="index.html">Home</a> &nbsp;•&nbsp;
+  <a href="gobag.html">Go-Bag Builder</a> &nbsp;•&nbsp;
+  <a href="food.html">Food &amp; Water</a> &nbsp;•&nbsp;
+  <a href="entertainment.html">Comfort &amp; Entertainment</a> &nbsp;•&nbsp;
+  <a href="flood-cleanup-kit.html">Flood Kit</a> &nbsp;•&nbsp;
+  <a href="hurricane-prep-kit.html">Hurricane Kit</a> &nbsp;•&nbsp;
+  <a href="i-rage-kit.html">I-Rage Kit</a> &nbsp;•&nbsp;
+  <a href="legal.html#privacy">Privacy</a> &nbsp;•&nbsp;
+  <a href="legal.html#terms">Terms</a> &nbsp;•&nbsp;
+  <a href="legal.html#affiliate">Affiliate Disclosure</a>
 </footer>
 </body>
 </html>
