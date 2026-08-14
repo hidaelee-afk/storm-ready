@@ -112,7 +112,7 @@
 
     <p style="margin-top:18px;"><a class="btn-check" style="text-decoration:none;padding:12px 20px;border-radius:10px;font-weight:700;display:inline-block;" href="entertainment.html">🎲 Add comfort &amp; entertainment for outage days →</a></p>
 
-    <div class="cart-note">💡 <b>Prepare your entire plan in one tap.</b> When you choose items, they open in your Amazon cart — you can add, remove, or adjust quantities there before checkout. You stay in control.</div>
+    <div class="cart-note">💡 <b>Prepare your entire plan in one tap.</b> Just add it to your cart — then adjust quantities or remove items right in Amazon. We made it easier for you.</div>
 
     <div class="disclaimer">
       <b>Not official guidance.</b> This is a preparedness aid, not a substitute for instructions from FEMA, NOAA/NWS, or local emergency management. During an active emergency, always follow official orders first. Product availability and pricing change; links open Amazon with our curated keywords.
@@ -127,7 +127,6 @@
     <div class="sum-total"><span>Estimated total</span><span id="sumTotal">$0.00</span></div>
     <button class="btn-cart" id="cartBtn">🛒 Prepare entire plan</button>
     <button class="btn-share" id="shareBtn">🔗 Copy curated list</button>
-    <a class="btn-check" style="text-decoration:none;display:block;text-align:center;padding:12px;border-radius:10px;font-weight:700;margin-top:10px;" href="checklist.html">📋 Packing checklist</a>
   </aside>
 </div>
 <div class="toast" id="toast"></div>
@@ -234,13 +233,13 @@ document.getElementById('cartBtn').addEventListener('click', function(){
 
 document.getElementById('shareBtn').addEventListener('click', function(){
   var sizeLabel = currentSize===2?"Couple (2)":currentSize===4?"Family (4–5)":"Extended (6+)";
-  var lines = ["STORMREADY USA — FOOD & WATER PLAN","Plan size: "+sizeLabel,"",
+  var lines = ["Hey, please check out this entire emergency prep plan.",
+    "Prepared at stormreadyusa.org/food.html — gear that helps you recover.","",
     "Our experts curated these search keywords and products for you:",""];
   selectedItems().forEach(function(p){ lines.push("• "+p.title+" (qty "+qtyFor(p)+"): "+amz(p.asin)); });
   lines.push("","Here is your emergency list. Add it all to your Amazon cart now, then remove anything you don't need —");
   lines.push("and share the list with the people you care about so they can prepare too.");
   lines.push("");
-  lines.push("Prepared at stormreadyusa.org/food.html — gear that helps you recover.");
   var text = lines.join("\n");
   if (navigator.clipboard && navigator.clipboard.writeText) {
     navigator.clipboard.writeText(text).then(function(){ toast("Curated list copied — share it!"); }, function(){ fallbackCopy(text); });
