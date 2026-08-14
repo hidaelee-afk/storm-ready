@@ -13,7 +13,8 @@
   .brand { display:flex; align-items:center; gap:10px; font-weight:800; font-size:20px; letter-spacing:-.3px; text-decoration:none; color:var(--ink); }
   .brand-logo { width:32px; height:32px; border-radius:8px; background:linear-gradient(135deg,var(--accent),var(--accent-2)); display:grid; place-items:center; color:white; font-size:18px; }
   .top a.back { color:var(--ink); font-weight:600; font-size:14px; }
-  .urgent { background:#fff7ed; border-bottom:2px solid #fdba74; color:#7c2d12; padding:12px 24px; text-align:center; font-size:14px; font-weight:600; }
+    .urgent { position:sticky; top:0; z-index:40; background:#fef2f2; border-bottom:2px solid #dc2626; color:#b91c1c; padding:12px 24px; text-align:center; font-size:14px; font-weight:700; }
+  .urgent b { color:#dc2626; }
   .urgent b { color:#9a3412; }
   .wrap { max-width:1120px; margin:0 auto; padding:30px 24px 90px; display:grid; grid-template-columns:1fr 320px; gap:32px; }
   .maincol { min-width:0; }
@@ -139,7 +140,7 @@
     <div class="planlabel" id="planLabel">Just me (1)</div>
     <div id="sumItems"></div>
     <div class="sum-total"><span>Estimated total</span><span id="sumTotal">$0.00</span></div>
-    <button class="btn-cart" id="cartBtn">🛒 Prepare entire bag</button>
+    <button class="btn-cart" id="cartBtn">🛒 Prepare Now</button>
     <p style="margin:10px 0 0; font-size:13px; color:var(--muted); text-align:center;">Edit on Amazon now and adjust later from the cart.</p>
     <button class="btn-share" id="shareBtn">🔗 Copy curated list</button>
   </aside>
@@ -208,13 +209,13 @@ function render(){
         + '<div class="note">'+p.note+'</div>'
         + '<div class="price">'+money(p.price)+'</div>'
         + '<div class="row"><span class="qbadge">Qty '+q+'</span>'
-        + '<button class="prepare'+(on?'':' off')+'" data-asin="'+p.asin+'">'+(on?'Prepare '+q:'Add')+'</button></div>'
+        + '<button class="prepare'+(on?'':' off')+'" data-asin="'+p.asin+'">'+(on?'Prepare Now':'Add')+'</button></div>'
         + '</div>';
     });
     SEARCHES.filter(function(s){return s.group===g;}).forEach(function(s){
       html += '<div class="card search-card"><h3>'+s.title+'</h3><div class="note">Our experts curated this search</div>'
         + '<div class="price">—</div><div class="row"><span class="qbadge">Search</span>'
-        + '<a class="prepare" style="text-decoration:none;" href="https://www.amazon.com/s?k='+s.k+'&tag='+TAG+'" target="_blank" rel="noopener">Prepare →</a></div></div>';
+        + '<a class="prepare" style="text-decoration:none;" href="https://www.amazon.com/s?k='+s.k+'&tag='+TAG+'" target="_blank" rel="noopener">Prepare Now</a></div></div>';
     });
     document.getElementById(g).innerHTML = html;
   });

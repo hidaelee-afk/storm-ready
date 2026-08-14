@@ -13,7 +13,8 @@
   .brand { display:flex; align-items:center; gap:10px; font-weight:800; font-size:20px; letter-spacing:-.3px; text-decoration:none; color:var(--ink); }
   .brand-logo { width:32px; height:32px; border-radius:8px; background:linear-gradient(135deg,var(--accent),var(--accent-2)); display:grid; place-items:center; color:white; font-size:18px; }
   .top a.back { color:var(--ink); font-weight:600; font-size:14px; }
-  .urgent { background:#fff7ed; border-bottom:2px solid #fdba74; color:#7c2d12; padding:12px 24px; text-align:center; font-size:14px; font-weight:600; }
+    .urgent { position:sticky; top:0; z-index:40; background:#fef2f2; border-bottom:2px solid #dc2626; color:#b91c1c; padding:12px 24px; text-align:center; font-size:14px; font-weight:700; }
+  .urgent b { color:#dc2626; }
   .urgent b { color:#9a3412; }
   .wrap { max-width:1120px; margin:0 auto; padding:30px 24px 90px; display:grid; grid-template-columns:1fr 320px; gap:32px; }
   .maincol { min-width:0; }
@@ -91,15 +92,7 @@
 <div class="wrap">
   <div class="maincol">
     <h1>Emergency Food &amp; Water</h1>
-    <p class="sub">Our experts curated these search keywords and products for real storm holdovers. Adjust the plan size and quantities update instantly — then Prepare your whole list in one tap.</p>
-
-    <div class="sizer">
-      <label>Adjust the plan size:</label>
-      <button data-size="2">Couple (2)</button>
-      <button data-size="4" class="active">Family (4–5)</button>
-      <button data-size="6">Extended (6+)</button>
-    </div>
-    <p class="hint">Family (4–5) is pre-selected — that's what most households need for a 72-hour hold.</p>
+    <p class="sub">Our experts curated these search keywords and products for real storm holdovers. Quantities are set for a typical household — then Prepare your whole list in one tap.</p>
 
     <div class="group-title">Meals &amp; ration kits</div>
     <div class="grid" id="meals"></div>
@@ -130,7 +123,7 @@
     <div class="planlabel" id="planLabel">Family (4–5)</div>
     <div id="sumItems"></div>
     <div class="sum-total"><span>Estimated total</span><span id="sumTotal">$0.00</span></div>
-    <button class="btn-cart" id="cartBtn">🛒 Prepare entire plan</button>
+    <button class="btn-cart" id="cartBtn">🛒 Prepare Now</button>
     <p style="margin:10px 0 0; font-size:13px; color:var(--muted); text-align:center;">Edit on Amazon now and adjust later from the cart.</p>
     <button class="btn-share" id="shareBtn">🔗 Copy curated list</button>
   </aside>
@@ -186,7 +179,7 @@ function render(){
         + '<div class="note">'+p.note+'</div>'
         + '<div class="price">'+money(p.price)+'</div>'
         + '<div class="row"><span class="qbadge">Qty '+q+'</span>'
-        + '<button class="prepare'+(on?'':' off')+'" data-asin="'+p.asin+'">'+(on?'Prepare '+q:'Add')+'</button></div>'
+        + '<button class="prepare'+(on?'':' off')+'" data-asin="'+p.asin+'">'+(on?'Prepare Now':'Add')+'</button></div>'
         + '</div>';
     });
     document.getElementById(g).innerHTML = html;
@@ -216,15 +209,6 @@ function renderSummary(){
   document.getElementById('sumItems').innerHTML = html || '<div class="sum-item"><span>Nothing selected</span><span>—</span></div>';
   document.getElementById('sumTotal').textContent = money(total);
 }
-
-document.querySelectorAll('.sizer button').forEach(function(b){
-  b.addEventListener('click', function(){
-    document.querySelectorAll('.sizer button').forEach(function(x){x.classList.remove('active');});
-    b.classList.add('active');
-    currentSize = parseInt(b.getAttribute('data-size'),10);
-    render();
-  });
-});
 
 function selectedItems(){ return PRODUCTS.filter(function(p){ return selected[p.asin] !== false; }); }
 
