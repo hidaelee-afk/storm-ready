@@ -37,7 +37,8 @@
   .prepare { font-family:inherit; font-size:13px; font-weight:700; border-radius:8px; padding:8px 12px; cursor:pointer; border:1px solid var(--accent); background:var(--accent); color:#fff; white-space:nowrap; }
   .prepare.off { background:#fff; color:var(--accent); }
   .search-card { border-style:dashed; }
-  .search-card a { font-weight:700; color:var(--accent); text-decoration:none; }
+  .search-card a { font-weight:700; text-decoration:none; }
+  .search-card .prepare { color:#fff; background:var(--accent); border:1px solid var(--accent); }
   .summary { background:white; border:1px solid var(--line); border-radius:16px; padding:20px; position:sticky; top:96px; align-self:start; }
   .summary h2 { margin:0 0 4px; font-size:18px; }
   .summary .planlabel { color:var(--muted); font-size:13px; margin-bottom:12px; }
@@ -93,6 +94,9 @@
     <h1>Build Your Go-Bag</h1>
     <p class="sub">Our experts curated these for one household. Prepare your whole bag in one tap, then adjust quantities or remove items right in Amazon.</p>
 
+    <div class="group-title">The bag &amp; food starters</div>
+    <div class="grid" id="g_starter"></div>
+
     <div class="group-title">Water &amp; shelter</div>
     <div class="grid" id="g_water"></div>
 
@@ -104,9 +108,6 @@
 
     <div class="group-title">Cleanup &amp; recovery</div>
     <div class="grid" id="g_cleanup"></div>
-
-    <div class="group-title">The bag &amp; food starters</div>
-    <div class="grid" id="g_starter"></div>
 
     <div class="water-sec">
       <h2>Running low? Order potable water to your area</h2>
