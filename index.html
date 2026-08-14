@@ -1122,16 +1122,19 @@
     <div class="capture">
       <h2>Get prepared before the next storm hits your ZIP.</h2>
       <p>Free regional checklists, 72-hour disaster alerts for your area, and the gear list we'd buy ourselves. No spam. Unsubscribe anytime.</p>
-      <form class="capture-form" id="captureForm" action="checklist.html?dl=1" method="get">
+      <form class="capture-form" id="captureForm" action="checklist.html" method="get">
+        <input type="hidden" name="dl" value="1">
         <input type="text" name="zip" id="zipInput" placeholder="ZIP code (e.g. 77002)" style="max-width:140px;" required>
         <input type="email" name="email" placeholder="you@example.com">
         <button type="submit">Send me the checklist</button>
       </form>
       <script>
-        // remember ZIP so returning visitors get a localized checklist
-        document.getElementById('captureForm').addEventListener('submit', function(){
+        document.getElementById('captureForm').addEventListener('submit', function(e){
+          e.preventDefault();
           var z = document.getElementById('zipInput').value.trim();
-          if (z) try { localStorage.setItem('sr_zip', z); } catch(_){}
+          try { if (z) localStorage.setItem('sr_zip', z); } catch(_){}
+          var url = 'checklist.html?dl=1' + (z ? '&zip=' + encodeURIComponent(z) : '');
+          window.location.href = url;
         });
       </script>
       <div class="fineprint">StormReady USA is not affiliated with FEMA, NOAA, NWS, USGS, Amazon, or the American Red Cross unless explicitly stated. We are an independent recovery resource, not a government agency.</div>

@@ -52,7 +52,7 @@
     <div class="zip-pill" id="zipPill">ZIP: —</div>
     <h1>Your Recovery Checklist</h1>
     <p style="color:var(--muted); margin:0;">Tap items as you complete them. Switch stages below. Your checklist downloads automatically — if it doesn't, use the buttons below.</p>
-    <div id="dlBanner" style="display:none; background:#e7f7ee; color:#15805c; border:1px solid #b6e3cd; border-radius:10px; padding:12px 16px; font-size:14px; font-weight:600; margin-top:14px;">✓ Checklist downloaded to your device (StormReady-Checklist-{{zip}}.txt). Check your Downloads folder.</div>
+    <div id="dlBanner" style="display:none; background:#e7f7ee; color:#15805c; border:1px solid #b6e3cd; border-radius:10px; padding:12px 16px; font-size:14px; font-weight:600; margin-top:14px;">✓ Checklist downloaded to your device (StormReady-Checklist-<span id="dlZip">your-area</span>.txt). Check your Downloads folder.</div>
     <div class="stage-tabs" id="stageTabs">
       <button data-stage="before" class="active">Before</button>
       <button data-stage="during">During</button>
@@ -183,6 +183,8 @@
   function showBanner(){
     var b = document.getElementById('dlBanner');
     if (b) { b.style.display = 'block'; }
+    var z = document.getElementById('dlZip');
+    if (z) { z.textContent = zip || 'your-area'; }
   }
 
   render();
