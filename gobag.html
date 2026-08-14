@@ -162,7 +162,7 @@ var selected = {};
 function qtyFor(p){
   var m = sizeMult[currentSize];
   if (!p.mult) return (m > 1 ? 2 : 1);
-  return Math.max(1, Math.round(p.mult * m * 2) / 2); // half-step scaling
+  return Math.max(1, Math.ceil(p.mult * m)); // whole units that scale with plan size
 }
 function amz(asin){ return "https://www.amazon.com/dp/" + asin + "?tag=" + TAG; }
 function money(n){ return "$" + n.toFixed(2); }
