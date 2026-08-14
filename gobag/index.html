@@ -188,7 +188,7 @@ function render(){
       var q = qtyFor(p);
       html += ''
         + '<div class="card">'
-        + '<a href="'+amz(p.asin)+'" target="_blank" rel="noopener"><span class="prod-img-ph" aria-label="'+p.title+'">📦</span></a>'
+        + '<a href="'+amz(p.asin)+'" target="_blank" rel="noopener"><img class="prod-img" src="https://m.media-amazon.com/images/I/'+encodeURIComponent(p.img)+'.jpg" alt="'+p.title+'" loading="lazy"></a>'
         + '<h3>'+p.title+'</h3>'
         + '<div class="note">'+p.note+'</div>'
         + '<div class="price">'+money(p.price)+'</div>'
