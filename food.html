@@ -3,53 +3,65 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Emergency Food & Water Kits — StormReady USA</title>
+<title>Emergency Food & Water — StormReady USA</title>
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%230f6b97'/%3E%3Cstop offset='1' stop-color='%230a4f72'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='32' height='32' rx='7' fill='url(%23g)'/%3E%3Ctext x='16' y='22' font-size='18' text-anchor='middle'%3E%E2%9B%88%3C/text%3E%3C/svg%3E">
 <style>
-  :root { --ink:#0b1220; --muted:#6b7a90; --line:#e4e8ef; --accent:#0f6b97; --accent-2:#0a4f72; --ok:#15805c; --card:#fff; }
+  :root { --ink:#0b1220; --muted:#6b7a90; --line:#e4e8ef; --accent:#0f6b97; --accent-2:#0a4f72; --ok:#15805c; --warn:#b45309; --card:#fff; }
   * { box-sizing:border-box; }
   body { font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif; color:var(--ink); background:#f7f9fc; line-height:1.6; margin:0; }
-  header.top { background:white; border-bottom:1px solid var(--line); padding:16px 32px; display:flex; align-items:center; justify-content:space-between; position:sticky; top:0; z-index:20; }
+  header.top { background:white; border-bottom:1px solid var(--line); padding:16px 32px; display:flex; align-items:center; justify-content:space-between; position:sticky; top:0; z-index:30; }
   .brand { display:flex; align-items:center; gap:10px; font-weight:800; font-size:20px; letter-spacing:-.3px; text-decoration:none; color:var(--ink); }
   .brand-logo { width:32px; height:32px; border-radius:8px; background:linear-gradient(135deg,var(--accent),var(--accent-2)); display:grid; place-items:center; color:white; font-size:18px; }
   .top a.back { color:var(--ink); font-weight:600; font-size:14px; }
-  .wrap { max-width:1080px; margin:0 auto; padding:32px 24px 64px; }
-  h1 { font-size:34px; letter-spacing:-1px; margin:0 0 4px; }
-  .sub { color:var(--muted); margin:0 0 24px; }
-  .sizer { background:white; border:1px solid var(--line); border-radius:14px; padding:18px 20px; margin-bottom:8px; display:flex; flex-wrap:wrap; gap:14px; align-items:center; }
-  .sizer label { font-weight:700; font-size:14px; }
+  .urgent { background:#fff7ed; border-bottom:2px solid #fdba74; color:#7c2d12; padding:12px 24px; text-align:center; font-size:14px; font-weight:600; }
+  .urgent b { color:#9a3412; }
+  .wrap { max-width:1120px; margin:0 auto; padding:30px 24px 90px; display:grid; grid-template-columns:1fr 320px; gap:32px; }
+  .maincol { min-width:0; }
+  h1 { font-size:32px; letter-spacing:-1px; margin:0 0 4px; }
+  .sub { color:var(--muted); margin:0 0 22px; }
+  .sizer { background:white; border:1px solid var(--line); border-radius:14px; padding:16px 18px; margin-bottom:8px; display:flex; flex-wrap:wrap; gap:12px; align-items:center; }
+  .sizer label { font-weight:700; font-size:14px; margin-right:4px; }
   .sizer button { font-family:inherit; font-size:14px; font-weight:700; border:1px solid var(--line); background:#fff; color:var(--ink); border-radius:24px; padding:9px 18px; cursor:pointer; }
   .sizer button.active { background:var(--accent); color:#fff; border-color:var(--accent); }
-  .hint { color:var(--muted); font-size:13px; margin:4px 2px 24px; }
-  .cat { margin:28px 0 8px; font-size:20px; letter-spacing:-.4px; }
-  .cat small { color:var(--muted); font-weight:500; font-size:14px; }
-  .grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(240px,1fr)); gap:16px; }
-  .card { background:var(--card); border:1px solid var(--line); border-radius:14px; padding:16px; display:flex; flex-direction:column; }
-  .card img { width:100%; height:160px; object-fit:contain; border-radius:8px; background:#f3f6fa; }
-  .card h3 { font-size:15px; margin:12px 0 4px; line-height:1.35; }
+  .hint { color:var(--muted); font-size:13px; margin:2px 2px 22px; }
+  .group-title { font-size:18px; margin:26px 0 10px; letter-spacing:-.3px; }
+  .grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(230px,1fr)); gap:16px; }
+  .card { background:var(--card); border:1px solid var(--line); border-radius:14px; padding:14px; display:flex; flex-direction:column; }
+  .card img { width:100%; height:150px; object-fit:contain; border-radius:8px; background:#f3f6fa; }
+  .card h3 { font-size:14px; margin:10px 0 3px; line-height:1.35; }
+  .card .note { color:var(--muted); font-size:12px; margin-bottom:6px; }
   .card .price { color:var(--accent-2); font-weight:800; font-size:16px; }
-  .card .row { display:flex; align-items:center; justify-content:space-between; margin-top:auto; padding-top:12px; }
-  .qty { font-size:13px; color:var(--muted); }
-  .qty b { color:var(--ink); font-size:15px; }
-  .toggle { font-family:inherit; font-size:13px; font-weight:700; border-radius:8px; padding:8px 14px; cursor:pointer; border:1px solid var(--accent); background:#fff; color:var(--accent); }
-  .toggle.on { background:var(--accent); color:#fff; }
-  .actions { position:sticky; bottom:0; background:white; border-top:1px solid var(--line); padding:16px 24px; display:flex; gap:12px; flex-wrap:wrap; justify-content:center; margin-top:32px; z-index:20; }
-  .actions button { font-family:inherit; font-size:15px; font-weight:700; border-radius:10px; padding:13px 22px; cursor:pointer; border:none; }
+  .card .row { display:flex; align-items:center; justify-content:space-between; margin-top:auto; padding-top:10px; gap:8px; }
+  .qbadge { background:#e7f1f7; color:var(--accent-2); font-weight:800; font-size:12px; border-radius:8px; padding:4px 9px; white-space:nowrap; }
+  .prepare { font-family:inherit; font-size:13px; font-weight:700; border-radius:8px; padding:8px 12px; cursor:pointer; border:1px solid var(--accent); background:var(--accent); color:#fff; white-space:nowrap; }
+  .prepare.off { background:#fff; color:var(--accent); }
+  .search-card { border-style:dashed; }
+  .search-card a { font-weight:700; color:var(--accent); text-decoration:none; }
+  /* summary panel */
+  .summary { background:white; border:1px solid var(--line); border-radius:16px; padding:20px; position:sticky; top:96px; align-self:start; }
+  .summary h2 { margin:0 0 4px; font-size:18px; }
+  .summary .planlabel { color:var(--muted); font-size:13px; margin-bottom:12px; }
+  .sum-item { display:flex; justify-content:space-between; font-size:13px; padding:6px 0; border-bottom:1px dashed var(--line); }
+  .sum-item span:last-child { font-weight:700; }
+  .sum-total { display:flex; justify-content:space-between; font-size:18px; font-weight:800; margin-top:12px; }
+  .sum-total span:last-child { color:var(--accent-2); }
+  .summary button { width:100%; font-family:inherit; font-size:14px; font-weight:700; border-radius:10px; padding:12px; cursor:pointer; border:none; margin-top:12px; }
   .btn-cart { background:var(--accent); color:#fff; }
   .btn-share { background:#fff; color:var(--accent); border:1px solid var(--accent); }
-  .btn-check { background:var(--ok); color:#fff; text-decoration:none; display:inline-block; }
-  .toast { position:fixed; bottom:90px; left:50%; transform:translateX(-50%); background:var(--ink); color:#fff; padding:12px 20px; border-radius:10px; font-size:14px; font-weight:600; opacity:0; transition:opacity .25s; pointer-events:none; z-index:50; }
-  .toast.show { opacity:1; }
-  .water-sec { background:white; border:1px solid var(--line); border-radius:14px; padding:22px; margin:32px 0; }
-  .water-sec h2 { margin:0 0 6px; font-size:22px; }
-  .water-sec p { color:var(--muted); margin:0 0 14px; }
+  .btn-check { background:var(--ok); color:#fff; text-decoration:none; display:block; text-align:center; margin-top:10px; }
+  .water-sec { background:white; border:1px solid var(--line); border-radius:14px; padding:20px; margin-top:26px; grid-column:1 / -1; }
+  .water-sec h2 { margin:0 0 6px; font-size:20px; }
+  .water-sec p { color:var(--muted); margin:0 0 12px; font-size:14px; }
   .water-form { display:flex; gap:10px; flex-wrap:wrap; align-items:center; }
   .water-form input { font-family:inherit; font-size:14px; padding:11px 14px; border:1px solid var(--line); border-radius:8px; max-width:160px; }
   .water-form button { font-family:inherit; font-size:14px; font-weight:700; background:var(--accent); color:#fff; border:none; border-radius:8px; padding:11px 18px; cursor:pointer; }
-  .disclaimer { background:#fff4f1; border:1px solid #f3c9c0; color:#7a2a1c; border-radius:10px; padding:14px 16px; font-size:13px; margin-top:24px; }
+  .disclaimer { background:#fff4f1; border:1px solid #f3c9c0; color:#7a2a1c; border-radius:10px; padding:14px 16px; font-size:13px; margin-top:24px; grid-column:1 / -1; }
+  .toast { position:fixed; bottom:24px; left:50%; transform:translateX(-50%); background:var(--ink); color:#fff; padding:12px 20px; border-radius:10px; font-size:14px; font-weight:600; opacity:0; transition:opacity .25s; pointer-events:none; z-index:60; }
+  .toast.show { opacity:1; }
   footer { background:var(--ink); color:#aebbcf; padding:28px 32px; text-align:center; font-size:13px; }
   footer a { color:#aebbcf; }
   .affil { color:var(--muted); font-size:12px; text-align:center; margin-top:8px; }
+  @media (max-width:880px){ .wrap{ grid-template-columns:1fr; } .summary{ position:static; } }
 </style>
 </head>
 <body>
@@ -57,93 +69,124 @@
   <a class="brand" href="index.html"><div class="brand-logo">⛈</div><span>StormReady<span style="color:#5fa9d0;">USA</span></span></a>
   <a class="back" href="index.html">← Home</a>
 </header>
+<div class="urgent">⏳ <b>Prepare now.</b> Our curated link credit expires 24 hours after you open it — and if a storm hits, Amazon Prime delivery can fail when roads and warehouses are down. <b>Order today, be ready before you need it.</b></div>
 
 <div class="wrap">
-  <h1>Emergency Food &amp; Water</h1>
-  <p class="sub">Pick your household size — we scale real, shelf-stable food and water to match. Most families start at the 4–5 person plan. Every item opens on Amazon with our referral link. Add the whole plan to cart in one tap, or copy the list to share with neighbors.</p>
+  <div class="maincol">
+    <h1>Emergency Food &amp; Water</h1>
+    <p class="sub">Our experts curated these search keywords and products for real storm holdovers. Adjust the plan size and quantities update instantly — then Prepare your whole list in one tap.</p>
 
-  <div class="sizer">
-    <label>Household size:</label>
-    <button data-size="2">Couple (2)</button>
-    <button data-size="4" class="active">Family (4–5)</button>
-    <button data-size="6">Extended (6+)</button>
-  </div>
-  <p class="hint">Family (4–5) is selected by default — that's what most households need for a 72-hour hold.</p>
-
-  <div id="catalog"></div>
-
-  <!-- Localized water-order sub-section -->
-  <div class="water-sec">
-    <h2>Running low? Order potable water to your area</h2>
-    <p>Water is the first thing to disappear after a storm. Order bottled or jug water for delivery to your ZIP before shelves empty — fast shipping beats the rush.</p>
-    <div class="water-form">
-      <input type="text" id="waterZip" placeholder="Your ZIP" maxlength="10">
-      <button id="waterBtn">Find water delivered to my area →</button>
+    <div class="sizer">
+      <label>Adjust the plan size:</label>
+      <button data-size="2">Couple (2)</button>
+      <button data-size="4" class="active">Family (4–5)</button>
+      <button data-size="6">Extended (6+)</button>
     </div>
+    <p class="hint">Family (4–5) is pre-selected — that's what most households need for a 72-hour hold.</p>
+
+    <div class="group-title">Meals &amp; ration kits</div>
+    <div class="grid" id="meals"></div>
+
+    <div class="group-title">Water</div>
+    <div class="grid" id="water"></div>
+
+    <div class="water-sec">
+      <h2>Running low? Order potable water to your area</h2>
+      <p>Water is the first thing to disappear after a storm. Order bottled or jug water for delivery to your ZIP before shelves empty — fast shipping beats the rush.</p>
+      <div class="water-form">
+        <input type="text" id="waterZip" placeholder="Your ZIP" maxlength="10">
+        <button id="waterBtn">Find water delivered to my area →</button>
+      </div>
+    </div>
+
+    <p style="margin-top:18px;"><a class="btn-check" style="text-decoration:none;padding:12px 20px;border-radius:10px;font-weight:700;display:inline-block;" href="entertainment.html">🎲 Add comfort &amp; entertainment for outage days →</a></p>
+
+    <div class="disclaimer">
+      <b>Not official guidance.</b> This is a preparedness aid, not a substitute for instructions from FEMA, NOAA/NWS, or local emergency management. During an active emergency, always follow official orders first. Product availability and pricing change; links open Amazon with our curated keywords.
+    </div>
+    <p class="affil">StormReady USA participates in the Amazon Associates program and may earn from qualifying purchases.</p>
   </div>
 
-  <p style="margin-top:20px;"><a class="btn-check" style="text-decoration:none;padding:13px 22px;border-radius:10px;font-weight:700;" href="checklist.html">📋 Open the full packing &amp; recovery checklist</a></p>
-
-  <div class="disclaimer">
-    <b>Not official guidance.</b> This is a preparedness aid, not a substitute for instructions from FEMA, NOAA/NWS, or local emergency management. During an active emergency, always follow official orders first. Product availability and pricing change; links go to Amazon with our Associates tag.
-  </div>
-  <p class="affil">As an Amazon Associate, StormReady USA earns from qualifying purchases.</p>
-</div>
-
-<div class="actions">
-  <button class="btn-cart" id="cartBtn">🛒 Add food &amp; water plan to cart</button>
-  <button class="btn-share" id="shareBtn">🔗 Copy shareable list</button>
-  <a class="btn-check" style="text-decoration:none;display:inline-block;" href="checklist.html">📋 Packing checklist</a>
+  <aside class="summary">
+    <h2>Your plan</h2>
+    <div class="planlabel" id="planLabel">Family (4–5)</div>
+    <div id="sumItems"></div>
+    <div class="sum-total"><span>Estimated total</span><span id="sumTotal">$0.00</span></div>
+    <button class="btn-cart" id="cartBtn">🛒 Prepare entire plan</button>
+    <button class="btn-share" id="shareBtn">🔗 Copy curated list</button>
+    <a class="btn-check" style="text-decoration:none;display:block;text-align:center;padding:12px;border-radius:10px;font-weight:700;margin-top:10px;" href="checklist.html">📋 Packing checklist</a>
+  </aside>
 </div>
 <div class="toast" id="toast"></div>
 
 <footer>
-  © 2026 StormReady USA. All rights reserved. &nbsp;•&nbsp; <a href="index.html">Home</a> &nbsp;•&nbsp; <a href="gobag.html">Go-Bag Builder</a> &nbsp;•&nbsp; <a href="legal.html#privacy">Privacy</a> &nbsp;•&nbsp; <a href="legal.html#terms">Terms</a> &nbsp;•&nbsp; <a href="legal.html#affiliate">Affiliate Disclosure</a>
+  © 2026 StormReady USA. All rights reserved. &nbsp;•&nbsp; <a href="index.html">Home</a> &nbsp;•&nbsp; <a href="gobag.html">Go-Bag Builder</a> &nbsp;•&nbsp; <a href="food.html">Food & Water</a> &nbsp;•&nbsp; <a href="entertainment.html">Comfort & Entertainment</a> &nbsp;•&nbsp; <a href="legal.html#privacy">Privacy</a> &nbsp;•&nbsp; <a href="legal.html#terms">Terms</a> &nbsp;•&nbsp; <a href="legal.html#affiliate">Affiliate Disclosure</a>
 </footer>
 
 <script>
-// Verified US ASINs (real images, real .com links, tag stormreadyusa-20)
+// Verified US ASINs (real images, real .com links). Our experts curated these.
 var PRODUCTS = [
-  { asin:"B0FH474C5Z", img:"717uGAGq39L", title:"Augason Farms 4-Person 72-Hour Emergency Food Kit (119 Servings, 25-Yr Shelf Life)", price:119.99, per:"kit4", note:"Feeds 4 for 72 hrs" },
-  { asin:"B075TXP1P5", img:"71W-Qa56XIL", title:"S.O.S. Rations 3600-Calorie Emergency Food Bar (3-Day / 72-Hour, 5-Yr Shelf Life)", price:24.54, per:"person", note:"1 bar per person, 72 hrs" },
-  { asin:"B07L3GGCJP", img:"71v5xQbAwtL", title:"5-Gallon Collapsible Water Container (BPA-free, ~40 servings)", price:17.00, per:"half", note:"1 per 2 people" }
+  { asin:"B0FH474C5Z", img:"717uGAGq39L", title:"Augason Farms 4-Person 72-Hour Emergency Food Kit (119 Servings, 25-Yr Shelf Life)", price:119.99, per:"kit4", group:"meals", note:"Feeds 4 · 72 hrs" },
+  { asin:"B0FH3K7GS3", img:"71zLBE+D7WL", title:"Augason Farms 30-Day Emergency Food Supply (1 Person, Just Add Water)", price:124.99, per:"person", group:"meals", note:"1 per person · 30 days" },
+  { asin:"B075TXP1P5", img:"71W-Qa56XIL", title:"S.O.S. Rations 3600-Calorie Emergency Food Bar (3-Day / 72-Hour, 5-Yr Shelf Life)", price:24.54, per:"person", group:"meals", note:"1 per person · 72 hrs" },
+  { asin:"B07L3GGCJP", img:"71v5xQbAwtL", title:"5-Gallon Collapsible Water Container (BPA-free, ~40 servings)", price:17.00, per:"half", group:"water", note:"1 per 2 people" }
 ];
 var TAG = "stormreadyusa-20";
-var currentSize = 4;            // default Family (4–5)
+var currentSize = 4;   // default Family (4–5)
 var selected = {};
 
 function qtyFor(p){
   var s = currentSize;
-  if (p.per === "kit4")    return Math.max(1, Math.ceil(s/4));   // feeds 4
-  if (p.per === "person")  return s;                              // 1 per person
-  if (p.per === "half")    return Math.max(1, Math.ceil(s/2));   // 1 per 2 people
+  if (p.per === "kit4")   return Math.max(1, Math.ceil(s/4));
+  if (p.per === "person") return s;
+  if (p.per === "half")   return Math.max(1, Math.ceil(s/2));
   return 1;
 }
 function amz(asin){ return "https://www.amazon.com/dp/" + asin + "?tag=" + TAG; }
+function money(n){ return "$" + n.toFixed(2); }
 
 function render(){
-  var html = '<div class="grid">';
-  PRODUCTS.forEach(function(p){
-    var on = selected[p.asin] !== false;
-    var q = qtyFor(p);
-    html += ''
-      + '<div class="card">'
-      + '<a href="'+amz(p.asin)+'" target="_blank" rel="noopener"><img src="https://m.media-amazon.com/images/I/'+p.img+'.__SL1500_.jpg" data-compliance="replace-with-paapi" alt="'+p.title+'"></a>'
-      + '<h3>'+p.title+'</h3>'
-      + '<div class="price">$'+p.price.toFixed(2)+' <span style="font-weight:500;color:var(--muted);font-size:12px;">· '+p.note+'</span></div>'
-      + '<div class="row"><span class="qty">Qty: <b>'+q+'</b></span>'
-      + '<button class="toggle'+(on?' on':'')+'" data-asin="'+p.asin+'">'+(on?'✓ In plan':'Add')+'</button></div>'
-      + '</div>';
+  ["meals","water"].forEach(function(g){
+    var html = "";
+    PRODUCTS.filter(function(p){return p.group===g;}).forEach(function(p){
+      var on = selected[p.asin] !== false;
+      var q = qtyFor(p);
+      html += ''
+        + '<div class="card">'
+        + '<a href="'+amz(p.asin)+'" target="_blank" rel="noopener"><img src="https://m.media-amazon.com/images/I/'+p.img+'.__SL1500_.jpg" data-compliance="replace-with-paapi" alt="'+p.title+'"></a>'
+        + '<h3>'+p.title+'</h3>'
+        + '<div class="note">'+p.note+'</div>'
+        + '<div class="price">'+money(p.price)+'</div>'
+        + '<div class="row"><span class="qbadge">Qty '+q+'</span>'
+        + '<button class="prepare'+(on?'':' off')+'" data-asin="'+p.asin+'">'+(on?'Prepare '+q:'Add')+'</button></div>'
+        + '</div>';
+    });
+    document.getElementById(g).innerHTML = html;
   });
-  html += '</div>';
-  document.getElementById('catalog').innerHTML = html;
-  document.querySelectorAll('.toggle[data-asin]').forEach(function(b){
+  document.querySelectorAll('.prepare[data-asin]').forEach(function(b){
     b.addEventListener('click', function(){
       var a = b.getAttribute('data-asin');
-      selected[a] = (selected[a] === false);
-      render();
+      var p = PRODUCTS.find(function(x){return x.asin===a;});
+      if (selected[a] === false){ selected[a]=true; render(); return; }
+      // open Amazon cart with this item at its scaled quantity
+      var q = qtyFor(p);
+      window.open("https://www.amazon.com/gp/aws/cart/add.html?AssociateTag="+TAG+"&ASIN.1="+a+"&Quantity.1="+q, "_blank", "noopener");
+      toast("Prepared "+q+" × "+p.title.split("(")[0].trim()+" — opens Amazon cart");
     });
   });
+  renderSummary();
+}
+
+function renderSummary(){
+  var sizeLabel = currentSize===2?"Couple (2)":currentSize===4?"Family (4–5)":"Extended (6+)";
+  document.getElementById('planLabel').textContent = sizeLabel;
+  var html = "", total = 0;
+  PRODUCTS.filter(function(p){return selected[p.asin]!==false;}).forEach(function(p){
+    var q = qtyFor(p); var line = p.price*q; total += line;
+    html += '<div class="sum-item"><span>'+q+' × '+p.title.split("(")[0].trim().slice(0,34)+'…</span><span>'+money(line)+'</span></div>';
+  });
+  document.getElementById('sumItems').innerHTML = html || '<div class="sum-item"><span>Nothing selected</span><span>—</span></div>';
+  document.getElementById('sumTotal').textContent = money(total);
 }
 
 document.querySelectorAll('.sizer button').forEach(function(b){
@@ -163,23 +206,23 @@ document.getElementById('cartBtn').addEventListener('click', function(){
   var url = "https://www.amazon.com/gp/aws/cart/add.html?AssociateTag=" + TAG;
   items.forEach(function(p, i){ var n=i+1; url += "&ASIN."+n+"="+p.asin+"&Quantity."+n+"="+qtyFor(p); });
   window.open(url, "_blank", "noopener");
-  toast("Opening Amazon cart with your "+items.length+" items…");
+  toast("Preparing your "+items.length+" items on Amazon…");
 });
 
 document.getElementById('shareBtn').addEventListener('click', function(){
-  var items = selectedItems();
   var sizeLabel = currentSize===2?"Couple (2)":currentSize===4?"Family (4–5)":"Extended (6+)";
-  var lines = ["STORMREADY USA — FOOD & WATER PLAN","Household size: "+sizeLabel,""];
-  items.forEach(function(p){ lines.push("• "+p.title+" (qty "+qtyFor(p)+"): "+amz(p.asin)); });
-  lines.push("","Built at stormreadyusa.org/food.html — gear that helps you recover.");
+  var lines = ["STORMREADY USA — FOOD & WATER PLAN","Plan size: "+sizeLabel,"",
+    "Our experts curated these search keywords and products for you:",""];
+  selectedItems().forEach(function(p){ lines.push("• "+p.title+" (qty "+qtyFor(p)+"): "+amz(p.asin)); });
+  lines.push("","Prepared at stormreadyusa.org/food.html — gear that helps you recover.");
   var text = lines.join("\n");
   if (navigator.clipboard && navigator.clipboard.writeText) {
-    navigator.clipboard.writeText(text).then(function(){ toast("List copied — share your referral links!"); }, function(){ fallbackCopy(text); });
+    navigator.clipboard.writeText(text).then(function(){ toast("Curated list copied — share it!"); }, function(){ fallbackCopy(text); });
   } else { fallbackCopy(text); }
 });
 function fallbackCopy(text){
   var ta = document.createElement('textarea'); ta.value = text; document.body.appendChild(ta);
-  ta.select(); try { document.execCommand('copy'); toast("List copied — share your referral links!"); } catch(e){ toast("Copy failed — select manually."); }
+  ta.select(); try { document.execCommand('copy'); toast("Curated list copied — share it!"); } catch(e){ toast("Copy failed — select manually."); }
   document.body.removeChild(ta);
 }
 
@@ -191,9 +234,8 @@ document.getElementById('waterBtn').addEventListener('click', function(){
 
 function toast(msg){
   var t = document.getElementById('toast'); t.textContent = msg; t.classList.add('show');
-  setTimeout(function(){ t.classList.remove('show'); }, 2600);
+  setTimeout(function(){ t.classList.remove('show'); }, 2800);
 }
-
 render();
 </script>
 </body>
