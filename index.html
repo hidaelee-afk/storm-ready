@@ -1131,6 +1131,10 @@
         document.getElementById('captureForm').addEventListener('submit', function(e){
           var z = document.getElementById('zipInput').value.trim();
           if (z) try { localStorage.setItem('sr_zip', z); } catch(_){}
+          // append auto-download flag
+          var act = 'checklist.html?dl=1';
+          if (z) act += '&zip=' + encodeURIComponent(z);
+          this.action = act;
         });
       </script>
       <div class="fineprint">StormReady USA is not affiliated with FEMA, NOAA, NWS, USGS, Amazon, or the American Red Cross unless explicitly stated. We are an independent recovery resource, not a government agency.</div>
