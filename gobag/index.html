@@ -81,9 +81,9 @@
     <a href="/#zones">Active Zones</a>
     <a href="/#guides">Recovery Guides</a>
     <a href="/#kits">Gear &amp; Kits</a>
-    <a href="gobag">Go-Bag Builder</a>
-    <a href="food">Food &amp; Water</a>
-    <a href="entertainment">Comfort</a>
+    <a href="/gobag">Go-Bag Builder</a>
+    <a href="/food">Food &amp; Water</a>
+    <a href="/entertainment">Comfort</a>
   </div>
 </nav>  </header>
 <div class="urgent">⏳ <b>Prepare now.</b> Order within 24 hours — when a storm hits, Amazon Prime delivery can fail as roads and warehouses go down. <b>Order today, be ready before you need it.</b></div>
@@ -117,7 +117,7 @@
       </div>
     </div>
 
-    <p style="margin-top:18px;"><a class="btn-check" style="text-decoration:none;padding:12px 20px;border-radius:10px;font-weight:700;display:inline-block;" href="food">🥫 Add a food &amp; water plan →</a> &nbsp; <a class="btn-check" style="text-decoration:none;padding:12px 20px;border-radius:10px;font-weight:700;display:inline-block;background:#7c3aed;" href="entertainment">🎲 Add comfort &amp; entertainment →</a></p>
+    <p style="margin-top:18px;"><a class="btn-check" style="text-decoration:none;padding:12px 20px;border-radius:10px;font-weight:700;display:inline-block;" href="/food">🥫 Add a food &amp; water plan →</a> &nbsp; <a class="btn-check" style="text-decoration:none;padding:12px 20px;border-radius:10px;font-weight:700;display:inline-block;background:#7c3aed;" href="/entertainment">🎲 Add comfort &amp; entertainment →</a></p>
 
     <div class="cart-note">💡 <b>Prepare your entire plan in one tap.</b> Just add it to your cart — then adjust quantities or remove items right in Amazon. We made it easier for you.</div>
 
@@ -137,15 +137,15 @@
 <footer>
   © 2026 StormReady USA. All rights reserved. &nbsp;•&nbsp;
   <a href="/">Home</a> &nbsp;•&nbsp;
-  <a href="gobag">Go-Bag Builder</a> &nbsp;•&nbsp;
-  <a href="food">Food &amp; Water</a> &nbsp;•&nbsp;
-  <a href="entertainment">Comfort &amp; Entertainment</a> &nbsp;•&nbsp;
-  <a href="flood-cleanup-kit">Flood Kit</a> &nbsp;•&nbsp;
-  <a href="hurricane-prep-kit">Hurricane Kit</a> &nbsp;•&nbsp;
-  <a href="i-rage-kit">I-Rage Kit</a> &nbsp;•&nbsp;
-  <a href="legal#privacy">Privacy</a> &nbsp;•&nbsp;
-  <a href="legal#terms">Terms</a> &nbsp;•&nbsp;
-  <a href="legal#affiliate">Affiliate Disclosure</a>
+  <a href="/gobag">Go-Bag Builder</a> &nbsp;•&nbsp;
+  <a href="/food">Food &amp; Water</a> &nbsp;•&nbsp;
+  <a href="/entertainment">Comfort &amp; Entertainment</a> &nbsp;•&nbsp;
+  <a href="/flood-cleanup-kit">Flood Kit</a> &nbsp;•&nbsp;
+  <a href="/hurricane-prep-kit">Hurricane Kit</a> &nbsp;•&nbsp;
+  <a href="/i-rage-kit">I-Rage Kit</a> &nbsp;•&nbsp;
+  <a href="/legal#privacy">Privacy</a> &nbsp;•&nbsp;
+  <a href="/legal#terms">Terms</a> &nbsp;•&nbsp;
+  <a href="/legal#affiliate">Affiliate Disclosure</a>
 </footer>
 
 <script>
@@ -198,8 +198,8 @@ function render(){
     });
     SEARCHES.filter(function(s){return s.group===g;}).forEach(function(s){
       html += '<div class="card search-card"><h3>'+s.title+'</h3><div class="note">Our experts curated this search</div>'
-        + '<div class="price">—</div><div class="row"><span class="qbadge">Search</span>'
-        + '<a class="prepare" style="text-decoration:none;" href="https://www.amazon.com/s?k='+s.k+'&tag='+TAG+'" target="_blank" rel="noopener">Shop now</a></div></div>';
+        + '<div class="price">—</div><div class="row">'
+        + '<a class="prepare" style="text-decoration:none;" href="https://www.amazon.com/s?k='+s.k+'&tag='+TAG+'" target="_blank" rel="noopener">Prepare Now</a></div></div>';
     });
     document.getElementById(g).innerHTML = html;
   });
