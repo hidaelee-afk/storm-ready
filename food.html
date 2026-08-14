@@ -120,11 +120,10 @@
 
   <aside class="summary">
     <h2>Your plan</h2>
-    <div class="planlabel" id="planLabel">Family (4–5)</div>
     <div id="sumItems"></div>
     <div class="sum-total"><span>Estimated total</span><span id="sumTotal">$0.00</span></div>
-    <button class="btn-cart" id="cartBtn">🛒 Prepare Now</button>
-    <p style="margin:10px 0 0; font-size:13px; color:var(--muted); text-align:center;">Edit on Amazon now and adjust later from the cart.</p>
+    <button class="btn-cart" id="cartBtn">🛒 Add to cart now</button>
+    <p style="margin:10px 0 0; font-size:13px; color:var(--muted); text-align:center;">Add to cart now — adjust quantities or remove items right in Amazon.</p>
     <button class="btn-share" id="shareBtn">🔗 Copy curated list</button>
   </aside>
 </div>
@@ -153,15 +152,11 @@ var PRODUCTS = [
   { asin:"B07L3GGCJP", img:"71v5xQbAwtL", title:"5-Gallon Collapsible Water Container (BPA-free, ~40 servings)", price:17.00, per:"half", group:"water", note:"1 per 2 people" }
 ];
 var TAG = "stormreadyusa-20";
-var currentSize = 4;   // default Family (4–5)
+var currentSize = 1;   // single-household plan — one unit of each
 var selected = {};
 
 function qtyFor(p){
-  var s = currentSize;
-  if (p.per === "kit4")   return Math.max(1, Math.ceil(s/4));
-  if (p.per === "person") return s;
-  if (p.per === "half")   return Math.max(1, Math.ceil(s/2));
-  return 1;
+  return 1; // single-household plan — one unit of each; adjust later in Amazon
 }
 function amz(asin){ return "https://www.amazon.com/dp/" + asin + "?tag=" + TAG; }
 function money(n){ return "$" + n.toFixed(2); }
@@ -178,8 +173,7 @@ function render(){
         + '<h3>'+p.title+'</h3>'
         + '<div class="note">'+p.note+'</div>'
         + '<div class="price">'+money(p.price)+'</div>'
-        + '<div class="row"><span class="qbadge">Qty '+q+'</span>'
-        + '<button class="prepare'+(on?'':' off')+'" data-asin="'+p.asin+'">'+(on?'Prepare Now':'Add')+'</button></div>'
+        + '<div class="row"><button class="prepare'+(on?'':' off')+'" data-asin="'+p.asin+'">'+(on?'Add to cart':'Add')+'</button></div>'
         + '</div>';
     });
     document.getElementById(g).innerHTML = html;
@@ -199,8 +193,6 @@ function render(){
 }
 
 function renderSummary(){
-  var sizeLabel = currentSize===2?"Couple (2)":currentSize===4?"Family (4–5)":"Extended (6+)";
-  document.getElementById('planLabel').textContent = sizeLabel;
   var html = "", total = 0;
   PRODUCTS.filter(function(p){return selected[p.asin]!==false;}).forEach(function(p){
     var q = qtyFor(p); var line = p.price*q; total += line;
@@ -222,7 +214,7 @@ document.getElementById('cartBtn').addEventListener('click', function(){
 });
 
 document.getElementById('shareBtn').addEventListener('click', function(){
-  var sizeLabel = currentSize===2?"Couple (2)":currentSize===4?"Family (4–5)":"Extended (6+)";
+  var sizeLabel = "Single household plan";
   var lines = ["Hey, please check out this entire emergency prep plan.",
     "Prepared at stormreadyusa.org/food.html — gear that helps you recover.","",
     "Our experts curated these search keywords and products for you:",""];
