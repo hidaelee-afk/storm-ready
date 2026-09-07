@@ -823,7 +823,7 @@
     <div class="section-head">
       <div class="eyebrow">Live Disaster Tracking</div>
       <h2>Active recovery zones</h2>
-      <p>Pulled live from NOAA NWS alerts, FEMA disaster declarations and USGS flood gauges — refreshed continuously.</p>
+      <p>Pulled live from NOAA/NWS active alerts and FEMA disaster declarations, refreshed on every page load.</p>
     </div>
 
     <div class="map-wrap">
@@ -1216,7 +1216,7 @@
       <div class="step">
         <div class="step-num">STEP 01</div>
         <h4>Live event detection</h4>
-        <p>Our system polls NOAA, NWS, FEMA, and USGS gauges every 5 minutes to detect declared events.</p>
+        <p>We read NOAA/NWS active alerts and FEMA disaster declarations straight from the official feeds, live on every visit.</p>
       </div>
       <div class="step">
         <div class="step-num">STEP 02</div>
@@ -1379,7 +1379,7 @@
 
     // one pin per state, showing that state's most severe tier
     var byState = {};
-    groupAlerts(features).forEach(function (g) {
+    features.forEach(function (g) {
       var cur = byState[g.state];
       if (!cur || TIER_RANK[g.tier] > TIER_RANK[cur.tier]) {
         byState[g.state] = { tier: g.tier, event: g.event, place: g.areas[0] || STATE_NAMES[g.state] };
@@ -1433,6 +1433,24 @@
     );
   }
 
+  function femaCardHtml(g) {
+    var label = { badge: "\u26a1 Federal declaration", cls: "sev-active" };
+    var when = new Date(g.sent).toLocaleDateString("en-US",
+                 { month: "short", day: "numeric", year: "numeric" });
+    return (
+      '<div class="zone-card tier-active">' +
+      '<span class="severity ' + label.cls + '">' + label.badge + "</span>" +
+      "<h3>" + escapeHtml(placeLabel(g) + ", " + g.state) + "</h3>" +
+      '<div class="meta">' + escapeHtml(g.event) + " • declared " + when + "</div>" +
+      '<div class="residents">' + escapeHtml(g.title) + "</div>" +
+      '<a href="' + (g.ia ? "https://www.fema.gov/assistance/individual"
+                          : "https://www.fema.gov/disaster/" + g.num) +
+      '" target="_blank" rel="noopener" class="resource-link">' +
+      (g.ia ? "Apply for FEMA assistance &rarr;" : "FEMA declaration details &rarr;") +
+      "</a></div>"
+    );
+  }
+
   function renderGrid(id, items, tier) {
     var el = document.getElementById(id);
     if (!el) return;
@@ -1441,63 +1459,115 @@
       return;
     }
     el.innerHTML = items.slice(0, 9).map(function (g) {
+      if (g.source === "fema") return femaCardHtml(g);
       // one card per storm per state; each carries its own severity colour
       return cardHtml(g.props, g.tier, placeLabel(g) + ", " + g.state);
     }).join("");
   }
 
-  function loadStormData() {
-    fetch("https://api.weather.gov/alerts/active?status=actual&message_type=alert,update&severity=Extreme,Severe,Moderate", {
-      headers: { Accept: "application/geo+json" }
-    })
-      .then(function (resp) {
-        if (!resp.ok) throw new Error("NWS API " + resp.status);
-        return resp.json();
-      })
-      .then(function (data) {
-        var features = (data.features || []).filter(function (f) {
-          return STORM_RE.test(f.properties.event || "");
-        });
-
-        var groups = groupAlerts(features);      // already tier- then recency-sorted
-        var critical = [], active = [], watch = [];
-        groups.forEach(function (g) {
-          if (g.tier === "critical") critical.push(g);
-          else if (g.tier === "active") active.push(g);
-          else watch.push(g);
-        });
-
-        renderPins(features);   // map pins + cards now share one dataset
-        renderGrid("activeZonesGrid", critical.concat(active), "active");
-        renderGrid("watchZonesGrid", watch, "watch");
-
-        var mapLabelEl = document.getElementById("mapLabelText");
-        if (mapLabelEl) {
-          mapLabelEl.textContent = "LIVE — " + (critical.length + active.length) + " active + " + watch.length + " watch/advisory zones";
-        }
-
-        var barEl = document.getElementById("alertBarText");
-        if (barEl) {
-          var top = critical[0] || active[0];
-          if (top) {
-            barEl.innerHTML = "<b>LIVE:</b> " + escapeHtml(top.event) + " — " + escapeHtml(placeLabel(top) + ", " + top.state);
-          } else {
-            barEl.textContent = "No critical storm warnings active right now — stay prepared anyway.";
-          }
-        }
-      })
-      .catch(function (err) {
-        console.warn("StormReady: live NWS fetch failed", err);
-        ["activeZonesGrid", "watchZonesGrid"].forEach(function (id) {
-          var el = document.getElementById(id);
-          if (el) el.innerHTML = '<div class="zone-card"><div class="meta">Live data temporarily unavailable — <a href="https://www.weather.gov/alerts" target="_blank" rel="noopener">check NWS alerts directly →</a></div></div>';
-        });
-        var mapLabelEl = document.getElementById("mapLabelText");
-        if (mapLabelEl) mapLabelEl.textContent = "Live data temporarily unavailable";
-        var barEl = document.getElementById("alertBarText");
-        if (barEl) barEl.textContent = "Live storm data temporarily unavailable — visit weather.gov/alerts for current warnings.";
-      });
+  // ---- FEMA disaster declarations = places actively recovering -------------
+  // The amber "Active recovery" tier in the legend is literally this: counties
+  // with an open federal declaration, where residents can still file for aid.
+  function femaUrl() {
+    var since = new Date(Date.now() - 90 * 864e5).toISOString().slice(0, 10);
+    return "https://www.fema.gov/api/open/v2/DisasterDeclarationsSummaries"
+      + "?$top=600&$orderby=declarationDate%20desc"
+      + "&$select=disasterNumber,state,incidentType,declarationTitle,declarationDate,designatedArea,iaProgramDeclared"
+      + "&$filter=declarationDate%20gt%20%27" + since + "%27";
   }
+
+  function groupFema(rows) {
+    var byDisaster = {};
+    rows.forEach(function (r) {
+      if (!STATE_XY[r.state]) return;               // territories we can't plot
+      var g = byDisaster[r.disasterNumber];
+      if (!g) {
+        g = byDisaster[r.disasterNumber] = {
+          num: r.disasterNumber,
+          event: r.incidentType + " recovery",
+          state: r.state,
+          tier: "active",                            // amber: active recovery
+          areas: [],
+          sent: r.declarationDate,
+          title: r.declarationTitle || "",
+          ia: !!r.iaProgramDeclared,
+          source: "fema"
+        };
+      }
+      var a = (r.designatedArea || "").replace(/\s*\(County\)|\s*County$|\s*Parish$/i, "").trim();
+      if (a && a !== "Statewide" && g.areas.indexOf(a) === -1) g.areas.push(a);
+      if (r.iaProgramDeclared) g.ia = true;
+    });
+
+    return Object.keys(byDisaster).map(function (k) { return byDisaster[k]; })
+      // Most recent declarations are Public Assistance only (infrastructure),
+      // not Individual Assistance - so link each to its own disaster page
+      // rather than implying residents can file a personal claim.
+      .sort(function (a, b) { return new Date(b.sent) - new Date(a.sent); });
+  }
+
+  function loadStormData() {
+    var nws = fetch("https://api.weather.gov/alerts/active?status=actual&message_type=alert,update&severity=Extreme,Severe,Moderate",
+                    { headers: { Accept: "application/geo+json" } })
+      .then(function (r) { if (!r.ok) throw new Error("NWS " + r.status); return r.json(); })
+      .then(function (d) {
+        return groupAlerts((d.features || []).filter(function (f) {
+          return STORM_RE.test(f.properties.event || "");
+        }));
+      });
+
+    // FEMA is a separate, slower feed - never let it block or break the NWS view
+    var fema = fetch(femaUrl())
+      .then(function (r) { if (!r.ok) throw new Error("FEMA " + r.status); return r.json(); })
+      .then(function (d) { return groupFema(d.DisasterDeclarationsSummaries || []); })
+      .catch(function (e) { console.warn("StormReady: FEMA feed unavailable", e); return []; });
+
+    Promise.all([nws, fema]).then(function (res) {
+      var groups = res[0], recovery = res[1];
+
+      var critical = [], activeNws = [], watch = [];
+      groups.forEach(function (g) {
+        if (g.tier === "critical") critical.push(g);
+        else if (g.tier === "active") activeNws.push(g);
+        else watch.push(g);
+      });
+
+      // red: storm happening now | amber: open FEMA recovery | blue: incoming
+      var activeZones = critical.concat(activeNws).concat(recovery);
+
+      renderPins(activeZones.concat(watch));
+      renderGrid("activeZonesGrid", activeZones, "active");
+      renderGrid("watchZonesGrid", watch, "watch");
+
+      var mapLabelEl = document.getElementById("mapLabelText");
+      if (mapLabelEl) {
+        mapLabelEl.textContent = "LIVE — " + activeZones.length + " active + " +
+          watch.length + " watch/advisory zones";
+      }
+
+      var barEl = document.getElementById("alertBarText");
+      if (barEl) {
+        var top = critical[0] || activeNws[0] || recovery[0];
+        if (top) {
+          barEl.innerHTML = "<b>LIVE:</b> " + escapeHtml(top.event) + " \u2014 " +
+            escapeHtml(placeLabel(top) + ", " + top.state);
+        } else {
+          barEl.textContent = "No critical storm warnings active right now — stay prepared anyway.";
+        }
+      }
+    }).catch(function (err) {
+      console.warn("StormReady: live feed failed", err);
+      ["activeZonesGrid", "watchZonesGrid"].forEach(function (id) {
+        var el = document.getElementById(id);
+        if (el) el.innerHTML = '<div class="zone-card"><div class="meta">Live data temporarily unavailable — <a href="https://www.weather.gov/alerts" target="_blank" rel="noopener">check NWS alerts directly →</a></div></div>';
+      });
+      var mapLabelEl = document.getElementById("mapLabelText");
+      if (mapLabelEl) mapLabelEl.textContent = "Live data temporarily unavailable";
+      var barEl = document.getElementById("alertBarText");
+      if (barEl) barEl.textContent = "Live storm data temporarily unavailable — visit weather.gov/alerts for current warnings.";
+    });
+  }
+
 
   loadStormData();
   // Refresh in the background every 15 minutes for anyone who keeps the tab open.
