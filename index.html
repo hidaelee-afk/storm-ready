@@ -1332,19 +1332,58 @@
 
   var TIER_RANK = { critical: 3, active: 2, watch: 1 };
 
+  // NWS splits one storm across many zones (Kauai alone files 7 Hurricane
+  // Warnings). Collapse event+state into a single entry so a big storm can't
+  // monopolise the grid and push smaller states off the page entirely.
+  function groupAlerts(features) {
+    var map = {};
+    features.forEach(function (f) {
+      var p = f.properties, tier = classify(p);
+      var sts = statesOf(p);
+      if (!sts.length) return;                     // marine-only: skip
+      sts.forEach(function (st) {
+        var key = (p.event || "") + "|" + st;
+        var g = map[key];
+        if (!g) {
+          g = map[key] = { event: p.event || "", state: st, tier: tier,
+                           areas: [], sent: p.sent, props: p };
+        }
+        (p.areaDesc || "").split(";").forEach(function (a) {
+          a = a.trim();
+          // "Hardin, TX" -> "Hardin"; keeps zone names like "Kauai East" intact
+          a = a.replace(/,\s*[A-Z]{2}$/, "");
+          if (a && g.areas.indexOf(a) === -1) g.areas.push(a);
+        });
+        if (TIER_RANK[tier] > TIER_RANK[g.tier]) { g.tier = tier; g.props = p; }
+        if (new Date(p.sent) > new Date(g.sent)) g.sent = p.sent;
+      });
+    });
+
+    return Object.keys(map).map(function (k) { return map[k]; })
+      .sort(function (a, b) {
+        if (TIER_RANK[b.tier] !== TIER_RANK[a.tier]) return TIER_RANK[b.tier] - TIER_RANK[a.tier];
+        return new Date(b.sent) - new Date(a.sent);
+      });
+  }
+
+  function placeLabel(g) {
+    var n = g.areas.length;
+    if (!n) return STATE_NAMES[g.state] || g.state;
+    var head = g.areas[0];
+    return n > 1 ? head + " +" + (n - 1) + " more" : head;
+  }
+
   function renderPins(features) {
     var el = document.getElementById("mapPins");
     if (!el) return;
 
     // one pin per state, showing that state's most severe tier
     var byState = {};
-    features.forEach(function (f) {
-      var tier = classify(f.properties);
-      statesOf(f.properties).forEach(function (st) {
-        if (!byState[st] || TIER_RANK[tier] > TIER_RANK[byState[st].tier]) {
-          byState[st] = { tier: tier, event: f.properties.event || "" };
-        }
-      });
+    groupAlerts(features).forEach(function (g) {
+      var cur = byState[g.state];
+      if (!cur || TIER_RANK[g.tier] > TIER_RANK[cur.tier]) {
+        byState[g.state] = { tier: g.tier, event: g.event, place: g.areas[0] || STATE_NAMES[g.state] };
+      }
     });
 
     var html = Object.keys(byState).sort(function (a, b) {
@@ -1353,10 +1392,10 @@
       var pos = STATE_XY[st], d = byState[st];
       var style = "left:" + pos[0] + "%; top:" + pos[1] + "%;";
       return '<div class="map-pin ' + d.tier + '" style="' + style + '" title="' +
-             escapeHtml(STATE_NAMES[st] + " - " + d.event) + '"></div>' +
+             escapeHtml(d.place + ", " + st + " - " + d.event) + '"></div>' +
              '<span class="pin-label ' + (d.tier === "critical" ? "alert-color" :
                d.tier === "active" ? "warn-color" : "watch-color") +
-             '" style="' + style + '">' + escapeHtml(STATE_NAMES[st] || st) + "</span>";
+             '" style="' + style + '">' + escapeHtml(d.place + ", " + st) + "</span>";
     }).join("");
 
     el.innerHTML = html || "";
@@ -1378,9 +1417,9 @@
     watch: { badge: "◷ Watch", cls: "sev-watch" }
   };
 
-  function cardHtml(props, tier) {
+  function cardHtml(props, tier, placeOverride) {
     var label = LABELS[tier];
-    var area = shortArea(props.areaDesc || "Area unavailable");
+    var area = placeOverride || shortArea(props.areaDesc || "Area unavailable");
     var linkHref = tier === "watch" ? "https://www.ready.gov/hurricanes" : "https://www.fema.gov/assistance/individual";
     var linkText = tier === "watch" ? "Ready.gov prep guide →" : "FEMA disaster assistance →";
     return (
@@ -1401,9 +1440,9 @@
       el.innerHTML = '<div class="zone-card"><div class="meta">No ' + (tier === "watch" ? "active watches/advisories" : "active warnings") + " right now — check back soon.</div></div>";
       return;
     }
-    el.innerHTML = items.slice(0, 9).map(function (f) {
-      // each card carries its own severity colour, not the section's
-      return cardHtml(f.properties, classify(f.properties));
+    el.innerHTML = items.slice(0, 9).map(function (g) {
+      // one card per storm per state; each carries its own severity colour
+      return cardHtml(g.props, g.tier, placeLabel(g) + ", " + g.state);
     }).join("");
   }
 
@@ -1420,18 +1459,13 @@
           return STORM_RE.test(f.properties.event || "");
         });
 
+        var groups = groupAlerts(features);      // already tier- then recency-sorted
         var critical = [], active = [], watch = [];
-        features.forEach(function (f) {
-          var tier = classify(f.properties);
-          if (tier === "critical") critical.push(f);
-          else if (tier === "active") active.push(f);
-          else watch.push(f);
+        groups.forEach(function (g) {
+          if (g.tier === "critical") critical.push(g);
+          else if (g.tier === "active") active.push(g);
+          else watch.push(g);
         });
-
-        var byRecency = function (a, b) { return new Date(b.properties.sent) - new Date(a.properties.sent); };
-        critical.sort(byRecency);
-        active.sort(byRecency);
-        watch.sort(byRecency);
 
         renderPins(features);   // map pins + cards now share one dataset
         renderGrid("activeZonesGrid", critical.concat(active), "active");
@@ -1446,7 +1480,7 @@
         if (barEl) {
           var top = critical[0] || active[0];
           if (top) {
-            barEl.innerHTML = "<b>LIVE:</b> " + escapeHtml(top.properties.event) + " — " + escapeHtml(shortArea(top.properties.areaDesc));
+            barEl.innerHTML = "<b>LIVE:</b> " + escapeHtml(top.event) + " — " + escapeHtml(placeLabel(top) + ", " + top.state);
           } else {
             barEl.textContent = "No critical storm warnings active right now — stay prepared anyway.";
           }
