@@ -397,7 +397,43 @@
   .trust-item h4 { margin: 0 0 4px; font-size: 14px; }
   .trust-item p { margin: 0; font-size: 12px; color: var(--muted); }
 
-  /* Instagram feed */
+  /* Social follow */
+  .x-follow {
+    display: flex; align-items: center; gap: 18px;
+    max-width: 620px; margin: 0 auto; padding: 20px 24px;
+    background: var(--card); border: 1px solid var(--line); border-radius: 14px;
+    text-decoration: none; color: inherit;
+    transition: box-shadow 0.2s, transform 0.2s, border-color 0.2s;
+  }
+  .x-follow:hover {
+    box-shadow: 0 10px 30px rgba(11,18,32,0.10);
+    transform: translateY(-2px); border-color: #0b1220;
+  }
+  .x-mark {
+    flex: none; width: 52px; height: 52px; border-radius: 50%;
+    background: #0b1220; color: #fff;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .x-follow-text { flex: 1; display: flex; flex-direction: column; gap: 3px; }
+  .x-follow-text strong { font-size: 17px; }
+  .x-follow-text small { font-size: 13px; color: var(--muted); }
+  .x-follow-cta {
+    flex: none; padding: 10px 18px; border-radius: 8px;
+    background: #0b1220; color: #fff; font-weight: 600; font-size: 14px;
+  }
+  .x-feed-note {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px;
+    max-width: 620px; margin: 18px auto 0;
+  }
+  .x-feed-note div {
+    display: flex; flex-direction: column; gap: 4px;
+    font-size: 12px; color: var(--muted); text-align: center;
+  }
+  .x-feed-note b { font-size: 13px; color: var(--ink); }
+  @media (max-width: 640px) {
+    .x-follow { flex-direction: column; text-align: center; gap: 12px; }
+    .x-feed-note { grid-template-columns: 1fr; gap: 10px; }
+  }
   .ig-grid {
     display: grid; grid-template-columns: repeat(6, 1fr); gap: 4px;
   }
@@ -1206,7 +1242,7 @@
       <div class="step">
         <div class="step-num">STEP 03</div>
         <h4>Affected residents arrive</h4>
-        <p>Via search, Instagram, partner Facebook groups, and geo-fenced ads. We meet them where the need is real.</p>
+        <p>Via search, our live X alerts, and local community groups. We meet them where the need is real.</p>
       </div>
       <div class="step">
         <div class="step-num">STEP 04</div>
@@ -1217,39 +1253,32 @@
   </div>
 </section>
 
-<!-- INSTAGRAM PREVIEW -->
+<!-- X / TWITTER FOLLOW -->
 <section>
   <div class="container">
     <div class="section-head">
-      <div class="eyebrow">@stormready.usa</div>
-      <h2>Follow us on Instagram</h2>
-      <p>Daily safety tips, before-and-after recovery stories, and prep reminders for the season ahead.</p>
+      <div class="eyebrow">@StormReadyUSA</div>
+      <h2>Follow us on X</h2>
+      <p>Live National Weather Service warnings the moment they're issued — plus the prep checklist that goes with each one.</p>
     </div>
-    <div class="ig-grid">
-      <div class="ig-tile-real">
-        <div class="item-img-ph" aria-label=""><span>📦</span><small></small></div>
-        <div class="ig-overlay">5 things to do BEFORE the storm hits</div>
-      </div>
-      <div class="ig-tile-real">
-        <div class="item-img-ph" aria-label=""><span>📦</span><small></small></div>
-        <div class="ig-overlay">First-24-hour flood checklist</div>
-      </div>
-      <div class="ig-tile-real">
-        <div class="item-img-ph" aria-label=""><span>📦</span><small></small></div>
-        <div class="ig-overlay">Hurricane prep: gear we'd actually buy</div>
-      </div>
-      <div class="ig-tile-real">
-        <img src="https://images.unsplash.com/photo-1605000797499-95a51c5269ae?w=400&q=80" alt="">
-        <div class="ig-overlay">Recovery story: Jefferson Parish, LA</div>
-      </div>
-      <div class="ig-tile-real">
-        <img src="https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=400&q=80" alt="">
-        <div class="ig-overlay">How to file a FEMA claim in 10 min</div>
-      </div>
-      <div class="ig-tile-real">
-        <img src="https://images.unsplash.com/photo-1583947215259-38e31be8751f?w=400&q=80" alt="">
-        <div class="ig-overlay">Mold prevention: the 48-hour rule</div>
-      </div>
+
+    <a class="x-follow" href="https://x.com/StormReadyUSA" target="_blank" rel="noopener">
+      <span class="x-mark" aria-hidden="true">
+        <svg viewBox="0 0 24 24" width="26" height="26" fill="currentColor" focusable="false">
+          <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+        </svg>
+      </span>
+      <span class="x-follow-text">
+        <strong>Follow @StormReadyUSA</strong>
+        <small>Storm warnings, flood alerts and prep lists — as they happen</small>
+      </span>
+      <span class="x-follow-cta">Follow &rarr;</span>
+    </a>
+
+    <div class="x-feed-note">
+      <div><b>⚠️ Warnings</b><span>Hurricane, flood and tornado alerts, straight from NWS</span></div>
+      <div><b>🎒 Prep lists</b><span>What to have ready, matched to the alert</span></div>
+      <div><b>🧰 New kits</b><span>Posted here first whenever we add one</span></div>
     </div>
   </div>
 </section>
