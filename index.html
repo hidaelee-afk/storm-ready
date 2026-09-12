@@ -1341,6 +1341,15 @@
       var p = f.properties, tier = classify(p);
       var sts = statesOf(p);
       if (!sts.length) return;                     // marine-only: skip
+      // One alert often spans several states (a single Flood Watch covered
+      // KY+OH+WV). UGC codes and areaDesc entries are index-aligned, so pair
+      // them and give each state only its own counties.
+      var ugc = (p.geocode && p.geocode.UGC) || [];
+      var names = (p.areaDesc || "").split(";").map(function (a) {
+        return a.trim().replace(/,\s*[A-Z]{2}$/, "");   // "Hardin, TX" -> "Hardin"
+      }).filter(Boolean);
+      var aligned = ugc.length === names.length;
+
       sts.forEach(function (st) {
         var key = (p.event || "") + "|" + st;
         var g = map[key];
@@ -1348,11 +1357,9 @@
           g = map[key] = { event: p.event || "", state: st, tier: tier,
                            areas: [], sent: p.sent, props: p };
         }
-        (p.areaDesc || "").split(";").forEach(function (a) {
-          a = a.trim();
-          // "Hardin, TX" -> "Hardin"; keeps zone names like "Kauai East" intact
-          a = a.replace(/,\s*[A-Z]{2}$/, "");
-          if (a && g.areas.indexOf(a) === -1) g.areas.push(a);
+        names.forEach(function (a, i) {
+          if (aligned && String(ugc[i]).slice(0, 2).toUpperCase() !== st) return;
+          if (g.areas.indexOf(a) === -1) g.areas.push(a);
         });
         if (TIER_RANK[tier] > TIER_RANK[g.tier]) { g.tier = tier; g.props = p; }
         if (new Date(p.sent) > new Date(g.sent)) g.sent = p.sent;
